@@ -1,0 +1,256 @@
+fileFormatVersion: 2
+guid: 9aa4cd884f048be41af1f2d6063c7692
+ModelImporter:
+  serializedVersion: 21300
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Banner_01b
+    second: {fileID: 2100000, guid: 597e8afe9da90eb4d87bfc562b3deb86, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Banner_01c
+    second: {fileID: 2100000, guid: a104df0974b4eb3498e905c8f6d72199, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Banner_01d
+    second: {fileID: 2100000, guid: 36b2627ea27e2fa4fae1205c41cb9690, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Banner_01e
+    second: {fileID: 2100000, guid: b843f1b2c01732c4089453a5b1761ac8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Banner_01f
+    second: {fileID: 2100000, guid: ea9069bee63c3cb4bbaa7fe88813992d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_CafeTexture_01a
+    second: {fileID: 2100000, guid: ac3d1b672e0477e4cb6b32a24e37784c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_CoffeeBeanTransportBelt_01a
+    second: {fileID: 2100000, guid: 05c07f62bbf389f4782dacc5e0121988, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_CoffeeMachineGlass_01a
+    second: {fileID: 2100000, guid: 520227004fd6be94f94f6a9911413d3f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_CoffeeTransportBelt_01a
+    second: {fileID: 2100000, guid: 9b1f68f2f8c8773438e80859c7294d52, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Floor_01a
+    second: {fileID: 2100000, guid: ee079626ebb69f74c9c6f6ecd1d842a2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Floor_02a
+    second: {fileID: 2100000, guid: aac148d479f5079488d1b53fb367bf3a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_GroundTex_01a
+    second: {fileID: 2100000, guid: a404033ede46b5f4f844e5e58f765c08, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Plant_01a
+    second: {fileID: 2100000, guid: 05b54064351a8f044b8e5f012556c1dd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Shelf_01b
+    second: {fileID: 2100000, guid: 68206591bc2093443baa4006b37f12f6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Table_01a
+    second: {fileID: 2100000, guid: 777fd21bbe89c7d4d9692e9e050fa589, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: "Ba\u015Fl\u0131ks\u0131z-1"
+    second: {fileID: 2800000, guid: a112f43ed6db0794d9a5e1fc5c2dbc0d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: "Ba\u015Fl\u0131ks\u0131z-2"
+    second: {fileID: 2800000, guid: b50e30271135f6346a8dbf75ee9d7c27, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: CafeTex
+    second: {fileID: 2800000, guid: a89e651832e8a434d80ab840072f7288, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: TableTex
+    second: {fileID: 2800000, guid: 47cd3e55776c21c44a5f5597a86783e5, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Tb
+    second: {fileID: 2800000, guid: 8551a12a1a83dd140a7656bf5b150532, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: "Varl\u0131k 1"
+    second: {fileID: 2800000, guid: 3c56f4ae9875cc544880501c62410011, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: "Varl\u0131k 13"
+    second: {fileID: 2800000, guid: ca75830605bf7a047848e8b344543b92, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: "Varl\u0131k 15"
+    second: {fileID: 2800000, guid: 5e954f8aa724ad542b9560bc2bf81ec0, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: "Varl\u0131k 2"
+    second: {fileID: 2800000, guid: bffb4b97cb17a864a92f30c6771b515c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: "Varl\u0131k 3"
+    second: {fileID: 2800000, guid: fd562ba5b16e2eb40a89a2ccee6d0fbb, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: "Varl\u0131k 4"
+    second: {fileID: 2800000, guid: 295a5699b1532e14885c2a654652d784, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: "Varl\u0131k 5"
+    second: {fileID: 2800000, guid: 84662d205400f90438cf6dddb17b77a5, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: "Varl\u0131k 9"
+    second: {fileID: 2800000, guid: 80010f657365aa64bbd3c5afe5c3b230, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: WhatsApp Image 2022-01-14 at 10.31.09
+    second: {fileID: 2800000, guid: af017724c8a79b24081052cf5873bc78, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: amazon
+    second: {fileID: 2800000, guid: b1a7ee67764336c4084815b8ad93f9de, type: 3}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 1
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

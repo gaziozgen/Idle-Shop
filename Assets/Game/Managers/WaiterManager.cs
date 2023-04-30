@@ -10,7 +10,7 @@ public class WaiterManager : FateMonoBehaviour
     [SerializeField] private int MaxWaiterCount = 10;
     [SerializeField] private GameObject waiterPrafab = null;
     [SerializeField] private FreeWaiterArea freeWaiterArea = null;
-    [SerializeField] protected SaveDataVariable saveData; 
+    [SerializeField] private SaveDataVariable saveData; 
     [SerializeField] private ParticleSystem smokeEffect = null;
 
     private FateObjectPool<Waiter> pool;
@@ -33,7 +33,7 @@ public class WaiterManager : FateMonoBehaviour
         {
             for (int j = 0; j < waiters[i]; j++)
             {
-                AddWaiter(i + 1, Vector3.zero, false, false);
+                AddWaiter(i + 1, Vector3.zero, false, false, false);
             }
         }
 
@@ -45,17 +45,21 @@ public class WaiterManager : FateMonoBehaviour
         else return false;
     }
 
-    public void AddWaiter(int level, Vector3 pos, bool focus = true, bool editSave = true)
+    public void AddWaiter(int level, Vector3 pos, bool focus = true, bool editSave = true, bool effect = true)
     {
         if (editSave)
         {
             saveData.Value.soldierBuyLevel++;
             saveData.Value.waiters[level-1]++;
         }
-        smokeEffect.transform.position = pos + Vector3.up;
-        smokeEffect.Play();
+        if (effect)
+        {
+            smokeEffect.transform.position = pos + Vector3.up;
+            smokeEffect.Play();
+        }
         if (focus) FreeIdleCameraController.Instance.Focus(pos, 0.5f);
-        Waiter waiter = pool.Get(pos);
+        Waiter waiter = pool.Get();
+        waiter.SetAgentPosition(pos);
         waiter.SetLevel(level);
         freeWaiterList.Add(waiter);
         freeWaiterArea.JoinQueue(waiter);
@@ -95,7 +99,6 @@ public class WaiterManager : FateMonoBehaviour
 
         for (int currentLookingLevel = 1; currentLookingLevel <= saveData.Value.waiters.Length; currentLookingLevel++)
         {
-            //if (saveData.Value.waiters[currentLookingLevel-1] >= targetWaiterCountToMerge) return true;
             waitersToMerge.Clear();
             for (int i = 0; i < freeWaiterList.Count; i++)
                 if (freeWaiterList[i].Level == currentLookingLevel)
@@ -156,11 +159,13 @@ public class WaiterManager : FateMonoBehaviour
 
                     waitersToMerge.RemoveAt(0);
 
+                    waiter.SetShadow(false);
                     waiter.SetAgentEnabled(false);
                     waiter.transform.DOMove((mergePoint + waiter.transform.position) / 2 + Vector3.up * 5, duration / 2).SetEase(Ease.OutSine).OnComplete(() =>
                     {
                         waiter.transform.DOMove(mergePoint, duration / 2).SetEase(Ease.InSine).OnComplete(() =>
                         {
+                            waiter.SetShadow(true);
                             waiter.SetAgentEnabled(true);
                             waiter.Release();
                         });

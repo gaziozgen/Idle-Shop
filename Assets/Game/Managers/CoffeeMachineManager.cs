@@ -6,7 +6,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class CoffeeMachineManager : MonoBehaviour
 {
-    [SerializeField] protected SaveDataVariable saveData;
+    [SerializeField] private SaveDataVariable saveData;
     [SerializeField] private List<CoffeeMachine> machines = new List<CoffeeMachine>();
 
     public WaitUntil WaitUntilThereIsACoffeeMachine;
@@ -22,7 +22,7 @@ public class CoffeeMachineManager : MonoBehaviour
         for (int i = 0; i < machines.Count; i++)
         {
             if (level == 0) return;
-            machines[i].Unlock();
+            machines[i].Unlock(false);
             level--;
         }
     }
@@ -58,7 +58,7 @@ public class CoffeeMachineManager : MonoBehaviour
             if (!machines[i].Unlocked)
             {
                 saveData.Value.CoffeeMachineCount++;
-                machines[i].Unlock();
+                machines[i].Unlock(true);
                 FreeIdleCameraController.Instance.Focus(machines[i].transform.position, 0.5f);
                 return;
             }

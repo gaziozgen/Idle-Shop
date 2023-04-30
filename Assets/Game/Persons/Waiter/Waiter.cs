@@ -1,3 +1,4 @@
+using DG.Tweening;
 using FateGames.Core;
 using System;
 using System.Collections;
@@ -21,6 +22,7 @@ public class Waiter : Person, IPooledObject
     [SerializeField] private FloatReference speedMultiplier;
     [SerializeField] private Animator animator;
     [SerializeField] private PersonalBubble bubble;
+    [SerializeField] private GameObject shadow;
 
     public Coroutine MissionCoroutine { get; private set; } = null;
     public Mission<Waiter> Mission { get; private set; } = null;
@@ -126,6 +128,11 @@ public class Waiter : Person, IPooledObject
     {
         agent.speed = baseWalkSpeed * speedMultiplier.Value;
         if (animator.GetBool("Walking")) UpdateAnimatorSpeed();
+    }
+
+    public void SetShadow(bool shadow)
+    {
+        this.shadow.SetActive(shadow);
     }
 
     private void UpdateAnimatorSpeed()

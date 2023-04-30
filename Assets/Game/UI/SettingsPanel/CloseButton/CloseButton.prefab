@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2737760738969570797}
   - component: {fileID: 2737760738969570798}
-  - component: {fileID: 6823455512985674198}
   m_Layer: 0
   m_Name: CloseButton
   m_TagString: Untagged
@@ -47,47 +46,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2737760738969570794}
   m_CullTransparentMesh: 1
---- !u!114 &6823455512985674198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2737760738969570794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4da31f62f55efdc4fb20bce47c3069f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  button: {fileID: 5356750702713056291}
-  onClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 90ba18d594b48a447a3100e5e4237bb2, type: 2}
-        m_TargetAssemblyTypeName: FateGames.Core.GameEvent, Assembly-CSharp
-        m_MethodName: Raise
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: d1ac0bd1ad58a87438e2a6a8399f579f, type: 2}
-        m_TargetAssemblyTypeName: FateGames.Core.SoundManager, Assembly-CSharp
-        m_MethodName: PlaySoundOneShotIgnorePause
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: a8843ed48baa0ab49a68a00763e0235c,
-            type: 2}
-          m_ObjectArgumentAssemblyTypeName: FateGames.Core.SoundEntity, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &6228667611206277548
 GameObject:
   m_ObjectHideFlags: 0

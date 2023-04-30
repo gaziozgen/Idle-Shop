@@ -46,10 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9289d9b5aba9c144b8582f195cdbbff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swerve: {fileID: 2910600824638830727}
-  speed: 200
-  firstClampRanges: {x: 20, y: 20, z: -15, w: -15}
-  secondClampRanges: {x: 20, y: 35, z: -15, w: -15}
+  _camera: {fileID: 23650384214390676}
+  gameState: {fileID: 11400000, guid: 35af722527cf21148bdd90a70a23f45e, type: 2}
+  speed: 1
+  zoomOutMin: 8
+  zoomOutMax: 20
+  driftAcceleration: 20
+  firstClampRanges: {x: 20, y: 25, z: -15, w: -15}
+  secondClampRanges: {x: 20, y: 45, z: -15, w: -15}
 --- !u!114 &2910600824638830727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,6 +136,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91ede11444e5fd649ab0ef75e818bbd9, type: 3}
+--- !u!20 &23650384214390676 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 8186557349950345784, guid: 91ede11444e5fd649ab0ef75e818bbd9,
+    type: 3}
+  m_PrefabInstance: {fileID: 8198938839184647596}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &23650384214390679 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8186557349950345787, guid: 91ede11444e5fd649ab0ef75e818bbd9,

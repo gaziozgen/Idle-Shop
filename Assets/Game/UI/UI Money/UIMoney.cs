@@ -33,7 +33,7 @@ public class UIMoney : FateMonoBehaviour
 
     public void Add(int coffeeCount, Vector3 wordPosition, bool tip)
     {
-        if (tip) TipBox.Instance.AddTip(coffeeCount);
+        if (tip) TipBox.Instance.AddTip((int)(coffeeCount * coffeeMoney * Random.Range(0.2f, 0.6f)));
         saveData.Value.Money += coffeeMoney * coffeeCount;
         UpdateText();
         RisingMoneyEffect(wordPosition, coffeeMoney * coffeeCount);
@@ -68,5 +68,5 @@ public class UIMoney : FateMonoBehaviour
 
 public partial class SaveData
 {
-    public int Money = 9999;
+    public int Money = 0;
 }

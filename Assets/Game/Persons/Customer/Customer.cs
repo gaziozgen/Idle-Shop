@@ -139,11 +139,12 @@ public class Customer : Person, IPooledObject
         seat = null;
         drinkedCoffees = 0;
         drinking = false;
-        ShopManager.Instance.Reception.JoinQueue(this);
+        agent.enabled = true;
     }
 
     public void OnRelease()
     {
         leaveEffect.Stop();
+        agent.enabled = false;
     }
 }

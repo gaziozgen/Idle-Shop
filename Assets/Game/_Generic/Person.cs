@@ -37,5 +37,10 @@ public abstract class Person : FateMonoBehaviour
     {
         agent.enabled = enabled;
     }
+
+    public void SetAgentPosition(Vector3 pos)
+    {
+        agent.Warp(pos);
+    }
 }
 

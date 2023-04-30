@@ -30,9 +30,10 @@ public class Table : FateMonoBehaviour
         return empty;
     }
 
-    public void Unlock()
+    public void Unlock(bool effect)
     {
-        smokeEffect.Play();
+        if (effect) smokeEffect.Play();
+
         if (UnlockedSeatCount == 0)
         {
             lockedMesh.SetActive(false);
@@ -45,7 +46,8 @@ public class Table : FateMonoBehaviour
         {
             if (UnlockedSeatCount == 2)
             {
-                table1.localScale = Vector3.zero;
+                table1.DOKill();
+                table1.gameObject.SetActive(false);
                 table2.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
                 garbageStack.UpdateStackStart(secondGarbageStackStartPoint);
             }

@@ -39,11 +39,16 @@ public class CoffeeMachine : FateMonoBehaviour
         loadingBubble.Close();
     }
 
-    public void Unlock()
+    public void Unlock(bool effect)
     {
-        smokeEffect.Play();
+        if (effect)
+        {
+            smokeEffect.Play();
+            mesh.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
+        }
+        else mesh.localScale = Vector3.one;
+
         Unlocked = true;
-        mesh.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
         lockedMesh.SetActive(false);
     }
 

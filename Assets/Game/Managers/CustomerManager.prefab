@@ -47,3 +47,5 @@ MonoBehaviour:
   customerPrafab: {fileID: 4140990125106090964, guid: 728a614c66e73c24cab3dace7b6772d9,
     type: 3}
   customerSpawnPoints: {fileID: 0}
+  saveData: {fileID: 11400000, guid: 2fbe29c554af5d84b9bdecaab48fec86, type: 2}
+  maxCoffeeNeedRatioToSeats: 0.5

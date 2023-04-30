@@ -21,13 +21,6 @@ public class ShopManager : FateMonoBehaviour
         Instance = this;
     }
 
-    public void RequestCustomer()
-    {
-        Customer customer = CustomerManager.Spawn();
-        customer.SetCoffeeNeed(1);
-        
-    }
-
     public void RequestWaiterToServe(Table table)
     {
         WaiterManager.AddMission((Waiter waiter) =>

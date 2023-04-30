@@ -10,7 +10,7 @@ public class TableManager : MonoBehaviour
     [SerializeField] private GameObject secondPlace = null;
     [SerializeField] private GameObject secondPlaceLock = null;
     [SerializeField] private int secondPlaceUnlockLevel = 0;
-    [SerializeField] protected SaveDataVariable saveData;
+    [SerializeField] private SaveDataVariable saveData;
 
     private bool secondPlaceUnlocked = false;
 
@@ -28,7 +28,7 @@ public class TableManager : MonoBehaviour
             for (int j = 0; j < 4; j++)
             {
                 if (level == 0) return;
-                tables[i].Unlock();
+                tables[i].Unlock(false);
                 level--;
             }
             if (saveData.Value.SeatCount >= secondPlaceUnlockLevel && !secondPlaceUnlocked)
@@ -79,7 +79,7 @@ public class TableManager : MonoBehaviour
             {
                 saveData.Value.SeatCount++;
                 
-                tables[i].Unlock();
+                tables[i].Unlock(true);
                 FreeIdleCameraController.Instance.Focus(tables[i].transform.position, 0.5f);
 
                 if (saveData.Value.SeatCount >= secondPlaceUnlockLevel && !secondPlaceUnlocked)

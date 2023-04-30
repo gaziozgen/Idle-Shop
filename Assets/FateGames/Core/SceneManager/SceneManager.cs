@@ -23,7 +23,7 @@ namespace FateGames.Core
         }
 
         private int levelCount { get => UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings - firstLevelSceneIndex; }
-        public bool IsLevel(UnityEngine.SceneManagement.Scene scene) => scene.buildIndex >= firstLevelSceneIndex;
+        public bool IsLevel(UnityEngine.SceneManagement.Scene scene) { Debug.Log(scene); return scene.buildIndex >= firstLevelSceneIndex; }
         private int currentLevelSceneIndex
         {
             get
@@ -49,7 +49,7 @@ namespace FateGames.Core
                 throw new System.ArgumentOutOfRangeException();
             gameState.Value = GameState.LOADING;
             if (async)
-                GameManager.Instance.StartCoroutine (LoadSceneAsynchronouslyRoutine(sceneIndex));
+                GameManager.Instance.StartCoroutine(LoadSceneAsynchronouslyRoutine(sceneIndex));
             else UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIndex);
         }
 

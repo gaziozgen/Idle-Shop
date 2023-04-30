@@ -54,6 +54,15 @@ public class UpgradeButtonsController : FateMonoBehaviour
         UpdateAllButtons();
     }
 
+    public void Hide()
+    {
+        mergeButton.gameObject.SetActive(false);
+        waiterButton.gameObject.SetActive(false);
+        speedUpButton.gameObject.SetActive(false);
+        seatButton.gameObject.SetActive(false);
+        coffeeMachineButton.gameObject.SetActive(false);
+    }
+
     public void UpdateAllButtons()
     {
         UpdateMergeButton();
@@ -65,6 +74,7 @@ public class UpgradeButtonsController : FateMonoBehaviour
 
     public void BuyWaiter()
     {
+        GameManager.Instance.PlayHaptic();
         UIMoney.Instance.Spend(buyWaiterBaseCost + saveData.Value.soldierBuyLevel * buyWaiterCostIncreaseAmount);
         waiterManager.AddWaiter(1, Vector3.zero);
         UpdateAllButtons();
@@ -72,6 +82,7 @@ public class UpgradeButtonsController : FateMonoBehaviour
 
     public void BuySeat()
     {
+        GameManager.Instance.PlayHaptic();
         UIMoney.Instance.Spend(buyTableBaseCost + saveData.Value.SeatCount * buyTableCostIncreaseAmount);
         tableManager.UnlockNextTable();
         UpdateAllButtons();
@@ -79,6 +90,7 @@ public class UpgradeButtonsController : FateMonoBehaviour
 
     public void BuyCoffeeMachine()
     {
+        GameManager.Instance.PlayHaptic();
         UIMoney.Instance.Spend(buyMachineBaseCost + saveData.Value.CoffeeMachineCount * buyMachineCostIncreaseAmount);
         coffeeMachineManager.UnlockNextMachine();
         UpdateAllButtons();
@@ -86,6 +98,7 @@ public class UpgradeButtonsController : FateMonoBehaviour
 
     public void SpeedUp()
     {
+        GameManager.Instance.PlayHaptic();
         UIMoney.Instance.Spend(speedUpBaseCost + saveData.Value.SpeedLevel * speedUpCostIncreaseAmount);
         waiterSpeedController.LevelUp();
         UpdateAllButtons();
@@ -93,6 +106,7 @@ public class UpgradeButtonsController : FateMonoBehaviour
 
     public void Merge()
     {
+        GameManager.Instance.PlayHaptic();
         UIMoney.Instance.Spend(mergeBaseCost + saveData.Value.soldierMergeLevel * mergeCostIncreaseAmount);
         waiterManager.Merge();
         UpdateAllButtons();
@@ -109,18 +123,19 @@ public class UpgradeButtonsController : FateMonoBehaviour
         {
             mergeButton.gameObject.SetActive(true);
             mergeButton.interactable = false;
-            mergeCost.text = "$" + cost.ToString();
+            mergeCost.text = cost.ToString();
         }
         else
         {
             mergeButton.gameObject.SetActive(true);
             mergeButton.interactable = true;
-            mergeCost.text = "$" + cost.ToString();
+            mergeCost.text = cost.ToString();
         }
     }
 
     private void UpdateBuyWaiterButton()
     {
+        waiterButton.gameObject.SetActive(true);
         int cost = buyWaiterBaseCost + saveData.Value.soldierBuyLevel * buyWaiterCostIncreaseAmount;
         if (!waiterManager.IsBuyAvaliable())
         {
@@ -130,18 +145,19 @@ public class UpgradeButtonsController : FateMonoBehaviour
         else if (saveData.Value.Money < cost)
         {
             waiterButton.interactable = false;
-            waiterCost.text = "$" + cost.ToString();
+            waiterCost.text = cost.ToString();
         }
         else
         {
             waiterButton.interactable = true;
-            waiterCost.text = "$" + cost.ToString();
+            waiterCost.text = cost.ToString();
         }
         if (cost == 0) waiterCost.text = "Free";
     }
 
     private void UpdateSpeedUpButton()
     {
+        speedUpButton.gameObject.SetActive(true);
         int cost = speedUpBaseCost + saveData.Value.SpeedLevel * speedUpCostIncreaseAmount;
         if (!waiterSpeedController.IsUpgradeAvaliable())
         {
@@ -151,17 +167,18 @@ public class UpgradeButtonsController : FateMonoBehaviour
         else if (saveData.Value.Money < cost)
         {
             speedUpButton.interactable = false;
-            speedUpCost.text = "$" + cost.ToString();
+            speedUpCost.text = cost.ToString();
         }
         else
         {
             speedUpButton.interactable = true;
-            speedUpCost.text = "$" + cost.ToString();
+            speedUpCost.text = cost.ToString();
         }
     }
 
     private void UpdateBuySeatButton()
     {
+        seatButton.gameObject.SetActive(true);
         int cost = buyTableBaseCost + saveData.Value.SeatCount * buyTableCostIncreaseAmount;
         if (!tableManager.IsUnlockAvaliable())
         {
@@ -171,36 +188,31 @@ public class UpgradeButtonsController : FateMonoBehaviour
         else if (saveData.Value.Money < cost)
         {
             seatButton.interactable = false;
-            seatCost.text = "$" + cost.ToString();
+            seatCost.text = cost.ToString();
         }
         else
         {
             seatButton.interactable = true;
-            seatCost.text = "$" + cost.ToString();
+            seatCost.text = cost.ToString();
         }
         if (cost == 0) seatCost.text = "Free";
     }
 
     private void UpdateBuyCoffeeMachineButton()
     {
-        if (tableManager.HowMuchMachineCanBeOpenNow() > saveData.Value.CoffeeMachineCount)
+        if (tableManager.HowMuchMachineCanBeOpenNow() > saveData.Value.CoffeeMachineCount && coffeeMachineManager.IsUnlockAvaliable())
         {
             coffeeMachineButton.gameObject.SetActive(true);
             int cost = buyMachineBaseCost + saveData.Value.CoffeeMachineCount * buyMachineCostIncreaseAmount;
-            if (!coffeeMachineManager.IsUnlockAvaliable())
+            if (saveData.Value.Money < cost)
             {
                 coffeeMachineButton.interactable = false;
-                coffeeMachineCost.text = "Max";
-            }
-            else if (saveData.Value.Money < cost)
-            {
-                coffeeMachineButton.interactable = false;
-                coffeeMachineCost.text = "$" + cost.ToString();
+                coffeeMachineCost.text = cost.ToString();
             }
             else
             {
                 coffeeMachineButton.interactable = true;
-                coffeeMachineCost.text = "$" + cost.ToString();
+                coffeeMachineCost.text = cost.ToString();
             }
             if (cost == 0) coffeeMachineCost.text = "Free";
         }

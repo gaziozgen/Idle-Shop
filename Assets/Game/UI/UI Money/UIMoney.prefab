@@ -48,7 +48,7 @@ MonoBehaviour:
   tmpro: {fileID: 405608845099067632}
   background: {fileID: 5161640165046305215}
   effectDuration: 0.2
-  coffeeMoney: 5
+  coffeeMoney: 10
   risingMoneyPrefab: {fileID: 7593697361327481714, guid: cf698fd2c09b6754a8ab9cfa07124831,
     type: 3}
   saveData: {fileID: 11400000, guid: 2fbe29c554af5d84b9bdecaab48fec86, type: 2}
@@ -126,7 +126,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &2044636674672052800
 MonoBehaviour:
@@ -203,8 +203,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 55.746, y: 0}
-  m_SizeDelta: {x: 258.48, y: 66.532}
+  m_AnchoredPosition: {x: 61.459503, y: 0}
+  m_SizeDelta: {x: 247.053, y: 66.532}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7823581044854849354
 CanvasRenderer:
@@ -243,8 +243,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -364,7 +364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.92941177}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

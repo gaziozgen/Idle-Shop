@@ -12,12 +12,9 @@ public class TipBox : MonoBehaviour
     [SerializeField] private Canvas buttonCanvas = null;
     [SerializeField] private Canvas panelCanvas = null;
     [SerializeField] private Transform tipBoxParent = null;
-    [SerializeField] private Transform tipBox = null;
-    [SerializeField] private Transform panel = null;
     [SerializeField] protected TextMeshProUGUI tipAmountText = null;
 
     private int currentAmount = 0;
-    private bool boxAnimationPlaying = false;
 
 
     private void Awake()
@@ -30,29 +27,19 @@ public class TipBox : MonoBehaviour
     {
         if (currentAmount == 0) tipBoxParent.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
         currentAmount += amount;
-
-        if (!boxAnimationPlaying)
-        {
-            boxAnimationPlaying = true;
-            tipBox.DORotate(Vector3.forward * 30, 0.2f).SetLoops(2, LoopType.Yoyo).OnComplete(() =>
-            {
-                boxAnimationPlaying = false;
-            });
-        }
     }
-
 
     public void OpenPanel()
     {
+        GameManager.Instance.PlayHaptic();
         GameManager.Instance.PauseGame();
+        UpgradeButtonsController.Instance.Hide();
+        TapToSpeedUp.Instance.Hide();
         panelCanvas.enabled = true;
         buttonCanvas.enabled = false;
         tipAmountText.text = currentAmount.ToString();
 
         tipBoxParent.localScale = Vector3.zero;
-
-        /*panel.localScale = Vector3.zero;
-        panel.DOScale(1, 0.5f).SetEase(Ease.OutBack);*/
     }
 
     public void Get()
@@ -69,9 +56,11 @@ public class TipBox : MonoBehaviour
 
     private void ClosePanel()
     {
+        GameManager.Instance.PlayHaptic();
         panelCanvas.enabled = false;
         buttonCanvas.enabled = true;
         GameManager.Instance.ResumeGame();
+        TapToSpeedUp.Instance.Show();
         currentAmount = 0;
     }
 }

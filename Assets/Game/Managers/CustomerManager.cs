@@ -6,6 +6,8 @@ public class CustomerManager : FateMonoBehaviour
 {
     [SerializeField] private GameObject customerPrafab = null;
     [SerializeField] private CustomerSpawnPoints customerSpawnPoints = null;
+    [SerializeField] private SaveDataVariable saveData;
+    [SerializeField] private float maxCoffeeNeedRatioToSeats = 0.2f;
 
     private FateObjectPool<Customer> pool;
     private List<Vector3> spawnPoints = null;
@@ -18,7 +20,11 @@ public class CustomerManager : FateMonoBehaviour
 
     public Customer Spawn()
     {
-        return pool.Get(spawnPoints[Random.Range(0, spawnPoints.Count)]);
+        Customer customer = pool.Get();
+        customer.SetCoffeeNeed(Random.Range(1, 1 + Mathf.CeilToInt(saveData.Value.SeatCount * maxCoffeeNeedRatioToSeats)));
+        customer.SetAgentPosition(spawnPoints[Random.Range(0, spawnPoints.Count)]);
+        ShopManager.Instance.Reception.JoinQueue(customer);
+        return customer;
     }
 
     public Vector3 GetRandomExitPoint()

@@ -61,7 +61,6 @@ public class Reception : FateMonoBehaviour
             expectedCustomers--;
             StartCoroutine(new GoToSeat().SetMission(customerQueue.Dequeue(), seat));
             if (expectedCustomers < 3) CallCustomer(1, 2);
-            else if (expectedCustomers < 6) CallCustomer(1, 5);
         }
         else
             waitingCustomer = customer;
@@ -78,7 +77,7 @@ public class Reception : FateMonoBehaviour
 
     private IEnumerator DefaultCustomerCall()
     {
-        if (expectedCustomers < 6) CallCustomer(1, 5);
+        if (expectedCustomers < 5) CallCustomer(2, 6);
         yield return _defaultCustomerCallInterval;
         yield return DefaultCustomerCall();
     }
@@ -88,7 +87,7 @@ public class Reception : FateMonoBehaviour
         expectedCustomers++;
         DOVirtual.DelayedCall(Random.Range(minDelay, maxDelay), () =>
         {
-            ShopManager.Instance.RequestCustomer();
+            ShopManager.Instance.CustomerManager.Spawn();
         });
     }
 }

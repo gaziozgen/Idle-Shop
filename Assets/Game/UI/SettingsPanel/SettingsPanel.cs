@@ -9,12 +9,14 @@ public class SettingsPanel : FateMonoBehaviour
 
     public void Open()
     {
+        GameManager.Instance.PlayHaptic();
         GameManager.Instance.PauseGame();
         canvas.enabled = true;
     }
 
     public void Close()
     {
+        GameManager.Instance.PlayHaptic();
         GameManager.Instance.ResumeGame();
         canvas.enabled = false;
     }

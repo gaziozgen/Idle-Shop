@@ -1,3 +1,4 @@
+using DG.Tweening;
 using FateGames.Core;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ public class PersonalBubble : FateMonoBehaviour
 {
     [SerializeField] private Canvas canvas = null;
     [SerializeField] private GameObject textBubble = null;
+    [SerializeField] private Transform textBubbleTransform = null;
     [SerializeField] private TextMeshProUGUI tmproText = null;
     [SerializeField] private GameObject loadingBubble = null;
     [SerializeField] private Image loadingBar = null;
@@ -47,6 +49,8 @@ public class PersonalBubble : FateMonoBehaviour
 
     public void SetText(string text)
     {
+        if (textBubbleTransform.localScale == Vector3.zero) textBubbleTransform.DOScale(1, 0.2f);
+
         if (!canvas.enabled) canvas.enabled = true;
 
         if (loading)
@@ -64,6 +68,7 @@ public class PersonalBubble : FateMonoBehaviour
     {
         loading = false;
         textShowing = false;
+        textBubbleTransform.localScale = Vector3.zero;
         loadingBubble.gameObject.SetActive(false);
         textBubble.SetActive(false);
         canvas.enabled = false;

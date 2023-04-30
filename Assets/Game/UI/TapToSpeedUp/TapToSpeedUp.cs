@@ -9,6 +9,8 @@ using DG.Tweening;
 
 public class TapToSpeedUp : FateMonoBehaviour
 {
+    public static TapToSpeedUp Instance;
+
     [SerializeField] private Canvas canvas;
     [SerializeField] private Animator animator;
     //[SerializeField] private FloatReference targetVariable;
@@ -21,6 +23,11 @@ public class TapToSpeedUp : FateMonoBehaviour
     private bool isGameStarted = false;
 
     private Tween speedUpTween = null, countdownTween = null;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Update()
     {
@@ -44,6 +51,7 @@ public class TapToSpeedUp : FateMonoBehaviour
 
     public void Tap()
     {
+        GameManager.Instance.PlayHaptic();
         //onTappedToSpeedUp.Raise();
         canvas.enabled = false;
         SpeedUp();
@@ -72,6 +80,12 @@ public class TapToSpeedUp : FateMonoBehaviour
         countdownTween.Kill(true);
         countdownTween = null;
     }
+
+    public void Hide()
+    {
+        canvas.enabled = false;
+    }
+
     public void Show()
     {
         canvas.enabled = true;

@@ -27,18 +27,18 @@ RectTransform:
   m_GameObject: {fileID: 2588473391589878222}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1564274728126490011}
   m_Father: {fileID: 2411331885554171276}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1.3244, y: 1.6486}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &4182051686627619535
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -114,7 +114,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.06}
+  m_AnchoredPosition: {x: 0, y: 0.059999943}
   m_SizeDelta: {x: 1.3244, y: 1.6486}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3378399069989752408
@@ -592,6 +592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 7343526399065887435}
   textBubble: {fileID: 2588473391589878222}
+  textBubbleTransform: {fileID: 4535237238978520720}
   tmproText: {fileID: 1804803625709109843}
   loadingBubble: {fileID: 6053860307096733409}
   loadingBar: {fileID: 6774712777963632180}

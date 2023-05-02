@@ -10,7 +10,7 @@ public class WaiterManager : FateMonoBehaviour
     [SerializeField] private int MaxWaiterCount = 10;
     [SerializeField] private GameObject waiterPrafab = null;
     [SerializeField] private FreeWaiterArea freeWaiterArea = null;
-    [SerializeField] private SaveDataVariable saveData; 
+    [SerializeField] private SaveDataVariable saveData;
     [SerializeField] private ParticleSystem smokeEffect = null;
 
     private FateObjectPool<Waiter> pool;
@@ -36,7 +36,23 @@ public class WaiterManager : FateMonoBehaviour
                 AddWaiter(i + 1, Vector3.zero, false, false, false);
             }
         }
+    }
 
+    public List<Waiter> GetFreeWaitersUpToCapacity(int capacityNeeded)
+    {
+        List<Waiter> waiters = new List<Waiter>();
+        while (0 < freeWaiterList.Count)
+        {
+            Waiter waiter = freeWaiterList[0];
+            capacityNeeded -= waiter.Capacity;
+            waiters.Add(waiter);
+            freeWaiterList.Remove(waiter);
+            freeWaiterArea.RemoveFromArea(waiter);
+            busyWaiterList.Add(waiter);
+
+            if (capacityNeeded <= 0) break;
+        }
+        return waiters;
     }
 
     public bool IsBuyAvaliable()
@@ -50,7 +66,7 @@ public class WaiterManager : FateMonoBehaviour
         if (editSave)
         {
             saveData.Value.soldierBuyLevel++;
-            saveData.Value.waiters[level-1]++;
+            saveData.Value.waiters[level - 1]++;
         }
         if (effect)
         {
@@ -62,7 +78,7 @@ public class WaiterManager : FateMonoBehaviour
         waiter.SetAgentPosition(pos);
         waiter.SetLevel(level);
         freeWaiterList.Add(waiter);
-        freeWaiterArea.JoinQueue(waiter);
+        freeWaiterArea.Join(waiter);
         ManageWaiters();
     }
 
@@ -76,7 +92,7 @@ public class WaiterManager : FateMonoBehaviour
     {
         busyWaiterList.Remove(waiter);
         freeWaiterList.Add(waiter);
-        freeWaiterArea.JoinQueue(waiter);
+        freeWaiterArea.Join(waiter);
         ManageWaiters();
     }
 
@@ -84,7 +100,7 @@ public class WaiterManager : FateMonoBehaviour
     {
         if (freeWaiterList.Count > 0 && missions.Count > 0)
         {
-            Waiter waiter = freeWaiterArea.Dequeue();
+            Waiter waiter = freeWaiterArea.ReleaseOldest();
             freeWaiterList.Remove(waiter);
             Action<Waiter> mission = missions.Dequeue();
             busyWaiterList.Add(waiter);
@@ -115,7 +131,7 @@ public class WaiterManager : FateMonoBehaviour
         return false;
     }
 
-    public void Merge()
+    public IEnumerator Merge()
     {
         float duration = 0.6f;
         int targetWaiterCountToMerge = 3;
@@ -144,7 +160,7 @@ public class WaiterManager : FateMonoBehaviour
 
                 for (int i = 0; i < targetWaiterCountToMerge; i++)
                 {
-                    Waiter waiter = waitersToMerge[0];
+                    Waiter waiter = waitersToMerge[i];
                     if (waiter.Mission != null)
                     {
                         StopCoroutine(waiter.MissionCoroutine);
@@ -156,8 +172,6 @@ public class WaiterManager : FateMonoBehaviour
                         freeWaiterList.Remove(waiter);
                         freeWaiterArea.RemoveFromArea(waiter);
                     }
-
-                    waitersToMerge.RemoveAt(0);
 
                     waiter.SetShadow(false);
                     waiter.SetAgentEnabled(false);
@@ -172,6 +186,9 @@ public class WaiterManager : FateMonoBehaviour
                     });
                 }
 
+
+                yield return new WaitUntil(() => waitersToMerge[0].gameObject.activeSelf == false);
+
                 saveData.Value.waiters[currentLookingLevel - 1] -= targetWaiterCountToMerge;
                 saveData.Value.waiters[currentLookingLevel]++;
                 saveData.Value.soldierMergeLevel++;
@@ -180,13 +197,10 @@ public class WaiterManager : FateMonoBehaviour
                 if (saveData.Value.maxAchivedWaiterLevel < currentLookingLevel + 1)
                     saveData.Value.maxAchivedWaiterLevel = currentLookingLevel + 1;
 
-                DOVirtual.DelayedCall(duration, () =>
-                {
-                    AddWaiter(level, mergePoint, false, false);
-                    UpgradeButtonsController.Instance.UpdateMergeButton();
-                });
+                AddWaiter(level, mergePoint, false, false);
+                UpgradeButtonsController.Instance.UpdateMergeButton();
 
-                return;
+                break;
             }
         }
     }

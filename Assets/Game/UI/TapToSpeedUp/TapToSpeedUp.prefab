@@ -307,7 +307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 8624235142157889911}
   animator: {fileID: 7727487936928669211}
-  impactDuration: 1.5
+  impactDuration: 3
   waitingDuration: 5
   multiplier: 1.5
   gameState: {fileID: 11400000, guid: 35af722527cf21148bdd90a70a23f45e, type: 2}

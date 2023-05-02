@@ -26,7 +26,7 @@ public class ShopManager : FateMonoBehaviour
         WaiterManager.AddMission((Waiter waiter) =>
         {
             GoToTable mission = new GoToTable();
-            waiter.SetMissionAndCoroutine(StartCoroutine(mission.SetMission(waiter, table)), mission);
+            waiter.SetMissionAndCoroutine(StartCoroutine(mission.SetMission(waiter, table)), mission, "GoToTable");
         });
     }
 
@@ -35,7 +35,7 @@ public class ShopManager : FateMonoBehaviour
         WaiterManager.AddMission((Waiter waiter) =>
         {
             CleanTable mission = new CleanTable();
-            waiter.SetMissionAndCoroutine(StartCoroutine(mission.SetMission(waiter, table)), mission);
+            waiter.SetMissionAndCoroutine(StartCoroutine(mission.SetMission(waiter, table)), mission, "CleanTable");
         });
     }
 

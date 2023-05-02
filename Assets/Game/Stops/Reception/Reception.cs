@@ -9,6 +9,7 @@ public class Reception : FateMonoBehaviour
 {
     [SerializeField] private Transform startPosition = null;
     [SerializeField] private float distance = 2;
+    [SerializeField] private int maxQueueLength = 5;
     [SerializeField] private float defaultCustomerCallInterval = 5;
     [SerializeField] private PersonalBubble bubble;
     [SerializeField] private float registerDuration = 1;
@@ -25,7 +26,7 @@ public class Reception : FateMonoBehaviour
     {
         _registerDuration = new WaitForSeconds(registerDuration);
         _defaultCustomerCallInterval = new(defaultCustomerCallInterval);
-        customerQueue = new PersonQueue<Customer>(startPosition, distance, (Customer customer) =>
+        customerQueue = new PersonQueue<Customer>(startPosition, distance, maxQueueLength, (Customer customer) =>
         {
             return StartCoroutine(Register(customer));
         }, (Coroutine routine) => StopCoroutine(routine));

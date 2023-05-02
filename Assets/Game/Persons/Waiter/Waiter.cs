@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class Waiter : Person, IPooledObject
 {
+    //public List<string> MissionList = new List<string>();
+
     [SerializeField] private int baseCapacity = 1;
     [SerializeField] private int capacityIncreaseRatio = 3;
     [SerializeField] private List<Material> levelMaterials = new List<Material>();
@@ -71,10 +73,42 @@ public class Waiter : Person, IPooledObject
         TrashCollectDuration = new(baseTrashCollectDuration / Mathf.Pow(stackOperationsSpeedIncreaseRatioPerLevel, level));
     }
 
-    public void SetMissionAndCoroutine(Coroutine coroutine, Mission<Waiter> mission)
+    public void SetMissionAndCoroutine(Coroutine coroutine, Mission<Waiter> mission, string missionName)
     {
-        MissionCoroutine = coroutine;
-        Mission = mission;
+        //MissionList.Add(missionName);
+        if (coroutine != null && mission != null)
+        {
+            if (MissionCoroutine == null && Mission == null)
+            {
+                MissionCoroutine = coroutine;
+                Mission = mission;
+            }
+            else
+            {
+                print(MissionCoroutine + " " + Mission);
+                print(coroutine + " " + mission);
+                Debug.LogError("Zaten görevi olan birine yeni atama yapýldý", this);
+            }
+        }
+        else if (coroutine == null && mission == null)
+        {
+            if (MissionCoroutine != null && Mission != null)
+            {
+                MissionCoroutine = coroutine;
+                Mission = mission;
+            }
+            else
+            {
+                print(MissionCoroutine + " " + Mission);
+                print(coroutine + " " + mission);
+                Debug.LogError("Görevi olmayan birinin görevi silindi", this);
+            }
+        }
+        else
+        {
+            print(MissionCoroutine + " " + Mission);
+            Debug.LogError("Yanlýþ kullaným", this);
+        }
     }
 
     public void OpenProcessAnimation()
@@ -144,12 +178,14 @@ public class Waiter : Person, IPooledObject
     public Action Release { get; set; }
     public void OnObjectSpawn()
     {
+        //MissionList.Add("spawn");
         Order = 0;
         UpdateWaiterSpeedMultiplier();
         agent.enabled = true;
     }
     public void OnRelease()
     {
+        //MissionList.Add("release");
         agent.enabled = false;
     }
 }

@@ -20,8 +20,8 @@ public class Customer : Person, IPooledObject
     public int CoffeeNeed { get; private set; } = 0;
     public bool Ordered { get; private set; } = false;
 
-    private bool drinking = false;
     private Seat seat = null;
+    private bool drinking = false;
     private bool happy = true;
 
     private WaitForSeconds coffeeDrinkDuration;
@@ -81,6 +81,7 @@ public class Customer : Person, IPooledObject
     public void TakeCoffee()
     {
         CoffeeNeed--;
+        seat.Table.InformTableThatCoffeeGetted();
         UpdateOrder();
 
         if (!drinking)

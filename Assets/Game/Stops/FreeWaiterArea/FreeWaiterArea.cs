@@ -4,40 +4,67 @@ using UnityEngine;
 
 public class FreeWaiterArea : MonoBehaviour
 {
-    [SerializeField] private PersonQueue<Waiter> waiterQueue = null;
-    [SerializeField] private Transform queueStart;
-    [SerializeField] private float queueSpacing;
-    [SerializeField] private float turnRotation = 0;
+    private static FreeWaiterArea instance = null;
+    public static FreeWaiterArea Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = FindObjectOfType<FreeWaiterArea>();
+            return instance;
+        }
+    }
+
+    [SerializeField] private List<Transform> waiterPositions;
+    [SerializeField] private int firstAreaRange = 10;
+
+    private List<int> emptyPositionIndexList = new List<int>();
+    private List<(int, Waiter)> fullPositionIndexList = new List<(int, Waiter)>();
 
     private void Awake()
     {
-        waiterQueue = new PersonQueue<Waiter>(queueStart, queueSpacing, (Waiter waiter) =>
-        {
-            return StartCoroutine(LookAndWait(waiter));
-        }, (Coroutine routine) => StopCoroutine(routine));
+        for (int i = 0; i < firstAreaRange; i++)
+            emptyPositionIndexList.Add(i);
     }
 
-    public void JoinQueue(Waiter waiter)
+    public void UpgradePositions()
     {
-        waiterQueue.Enqueue(waiter);
+        for (int i = firstAreaRange; i < waiterPositions.Count; i++)
+            emptyPositionIndexList.Add(i);
+    }
+
+    public void Join(Waiter waiter)
+    {
+        int indexInEmptyPosIndexList = Random.Range(0, emptyPositionIndexList.Count);
+        int indexInWaiterPositionList = emptyPositionIndexList[indexInEmptyPosIndexList];
+        emptyPositionIndexList.RemoveAt(indexInEmptyPosIndexList);
+        fullPositionIndexList.Add((indexInWaiterPositionList, waiter));
+        waiter.SetDestination(waiterPositions[indexInWaiterPositionList].position);
     }
 
     public void RemoveFromArea(Waiter waiter)
     {
-        waiterQueue.RemoveImmediate(waiter);
-    }
+        int indexInFullPosIndexList = -1;
+        for (int i = 0; i < fullPositionIndexList.Count; i++)
+            if (fullPositionIndexList[i].Item2 == waiter)
+                indexInFullPosIndexList = i;
 
-    public Waiter Dequeue()
-    {
-        return waiterQueue.Dequeue();
-    }
-
-    private IEnumerator LookAndWait(Waiter waiter)
-    {
-        if (waiterQueue.Contains(waiter))
+        if (indexInFullPosIndexList != -1)
         {
-            yield return waiter.WaitUntilReached;
-            waiter.TurnTo(turnRotation);
+            int indexInWaiterPositionList = fullPositionIndexList[indexInFullPosIndexList].Item1;
+            fullPositionIndexList.RemoveAt(indexInFullPosIndexList);
+            emptyPositionIndexList.Add(indexInWaiterPositionList);
         }
+        else
+            Debug.LogError("Waiter not in area", waiter);
+    }
+
+    public Waiter ReleaseOldest()
+    {
+        Waiter waiter = fullPositionIndexList[0].Item2;
+        int posIndex = fullPositionIndexList[0].Item1;
+        fullPositionIndexList.RemoveAt(0);
+        emptyPositionIndexList.Add(posIndex);
+        return waiter;
     }
 }

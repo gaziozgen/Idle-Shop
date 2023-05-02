@@ -85,6 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPosition: {fileID: 9043585393309784795}
   distance: 2
+  maxQueueLength: -1
   defaultCustomerCallInterval: 5
   bubble: {fileID: 9176825850850252141}
   registerDuration: 1

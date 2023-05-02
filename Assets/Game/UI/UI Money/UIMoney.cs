@@ -68,5 +68,5 @@ public class UIMoney : FateMonoBehaviour
 
 public partial class SaveData
 {
-    public int Money = 0;
+    public int Money = 999999;
 }

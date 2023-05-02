@@ -89,6 +89,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WaiterInteractionPoint: {fileID: 4153188299456503330}
+  queueDistance: 1
+  maxQueueLength: -1
   seats:
   - {fileID: 6015861060712811190}
   - {fileID: 297304140968357915}

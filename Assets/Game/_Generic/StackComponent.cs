@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FateGames.Core;
-using UnityEngine.AI;
 
 public class StackComponent : FateMonoBehaviour
 {
@@ -15,24 +13,27 @@ public class StackComponent : FateMonoBehaviour
     public int Count { get => list.Count; }
 
     private List<Transform> list = new List<Transform>();
+    private Transform stackStart = null;
     private Vector3 lastPosisiton = Vector3.zero;
     private bool moving = false;
-
-    private Transform stackStart = null;
 
     private void Awake()
     {
         stackStart = stackParentAndStart;
     }
 
-    public void Push(Transform trans, bool fromtop = true)
+    public void Push(Transform trans)
     {
-        if (fromtop) list.Add(trans);
-        else list.Insert(0, trans);
+        list.Add(trans);
     }
 
     public Transform Pop()
     {
+        if (list.Count == 0)
+        {
+            Debug.LogError("Stack Is Empty", this); 
+            return null;
+        }
         Transform last = list[list.Count - 1];
         list.Remove(last);
         return last;

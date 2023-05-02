@@ -108,7 +108,7 @@ public class UpgradeButtonsController : FateMonoBehaviour
     {
         GameManager.Instance.PlayHaptic();
         UIMoney.Instance.Spend(mergeBaseCost + saveData.Value.soldierMergeLevel * mergeCostIncreaseAmount);
-        waiterManager.Merge();
+        StartCoroutine(waiterManager.Merge());
         UpdateAllButtons();
     }
 

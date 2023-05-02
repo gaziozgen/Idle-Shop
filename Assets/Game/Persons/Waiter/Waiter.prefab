@@ -91,7 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stackParentAndStart: {fileID: 2111977636188772304}
   distance: {x: 0, y: 0.4, z: 0}
-  speed: 70
+  speed: 30
   additionalLatencyEffectOnMove: 0
   additionalLatencyAmount: -0.1
 --- !u!114 &-8454994961979344476

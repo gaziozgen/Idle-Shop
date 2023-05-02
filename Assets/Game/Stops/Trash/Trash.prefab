@@ -113,6 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionPoint: {fileID: 1307105736404216494}
   queueSpacing: 1.5
+  maxQueueLength: 6
   trashTarget: {fileID: 7284630729098111825}
 --- !u!65 &8147793983516917533
 BoxCollider:

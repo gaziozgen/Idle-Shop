@@ -79,8 +79,8 @@ public class FreeIdleCameraController : FateMonoBehaviour
         else
         {
             // ########################################################################################################
-            MobileControl(); 
-            //PcControl();
+            //MobileControl(); 
+            PcControl();
 
             if (drift)
             {

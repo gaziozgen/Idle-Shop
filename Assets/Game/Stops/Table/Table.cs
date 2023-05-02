@@ -5,10 +5,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using DG.Tweening;
+using static UnityEngine.Rendering.DebugUI;
+using TreeEditor;
 
 public class Table : FateMonoBehaviour
 {
     public Transform WaiterInteractionPoint = null;
+    [SerializeField] private float queueDistance = 2f;
+    [SerializeField] private int maxQueueLength = 5;
     [SerializeField] private List<Seat> seats = new List<Seat>();
     [SerializeField] private GameObject lockedMesh;
     [SerializeField] private Transform table1;
@@ -19,11 +23,59 @@ public class Table : FateMonoBehaviour
     [SerializeField] private ParticleSystem smokeEffect = null;
     [SerializeField] private ParticleSystem cleanEffect = null;
 
+    private PersonQueue<Waiter> waiterQueue;
+    private List<Waiter> servingWaiters = new List<Waiter>();
+
     public int UnlockedSeatCount { get; private set; } = 0;
+
+    public int CoffeeShortage { get => TotalCoffeeNeed() - PromisedCoffees; }
+    public int PromisedCoffees { get; private set; } = 0;
     public int GarbageCount { get => garbageStack.Count; }
 
     private bool empty = true;
     private bool waiterReaquested = false;
+
+    private void Awake()
+    {
+        waiterQueue = new PersonQueue<Waiter>(WaiterInteractionPoint, queueDistance, maxQueueLength ,(Waiter waiter) =>
+        {
+            return StartCoroutine(ServeCoffees(waiter));
+        }, (Coroutine routine) => StopCoroutine(routine));
+    }
+
+    private IEnumerator ServeCoffees(Waiter waiter)
+    {
+        yield return waiter.WaitUntilReached;
+        waiter.TurnTo(WaiterInteractionPoint.eulerAngles.y);
+
+        List<Seat> fullSeats = GetSeats();
+        for (int i = 0; 0 < waiter.CoffeeStackLength; i++)
+        {
+            Seat seat = fullSeats[i % fullSeats.Count];
+            if (seat.Customer && seat.Customer.CoffeeNeed > 0)
+            {
+                yield return waiter.CoffeeServeDuration;
+                seat.PutCoffee(waiter.ServeCoffee());
+            }
+            else
+                fullSeats.Remove(seat);
+        }
+    }
+
+    public void JoinQueue(Waiter waiter)
+    {
+        waiterQueue.Enqueue(waiter);
+    }
+
+    public void Dequeue()
+    {
+        waiterQueue.Dequeue();
+    }
+
+    public void RemoveFromQueue(Waiter waiter)
+    {
+        waiterQueue.RemoveImmediate(waiter);
+    }
 
     public bool IsEmpty()
     {
@@ -140,10 +192,74 @@ public class Table : FateMonoBehaviour
         return totalNeed;
     }
 
+    public void PromiseForCoffee(int count)
+    {
+        PromisedCoffees += count;
+    }
+
+    public void CancelCoffeePromise(int count)
+    {
+        PromisedCoffees -= count;
+    }
+
+    public void RegisterToServingWaiters(Waiter waiter)
+    {
+        if (!servingWaiters.Contains(waiter)) 
+            servingWaiters.Add(waiter);
+    }
+
+    public void CompleteWaiterInServers(Waiter waiter)
+    {
+        servingWaiters.Remove(waiter);
+
+        if (servingWaiters.Count == 0)
+            waiterReaquested = false;
+    }
+
+    public void RemoveWaiterFromServers(Waiter waiter)
+    {
+        servingWaiters.Remove(waiter);
+
+        // görevin baþarýsýz olduðu tüm durumlarda kahveler yarým kaldýðý için
+        // kesinlikle baþka garson gerekiyor
+        if (servingWaiters.Count == 0)
+            ShopManager.Instance.RequestWaiterToServe(this);
+    }
+
+    public void InformTableThatCoffeeGetted()
+    {
+        PromisedCoffees -= 1;
+    }
+
+    public void StartOrderMission(Waiter waiter)
+    {
+        GetOrder mission = new GetOrder();
+
+        waiter.SetMissionAndCoroutine(StartCoroutine(mission.SetMission(waiter, this)), mission, "GetOrder");
+    }
+
     public void StartServeMission(Waiter waiter)
     {
         ServeCoffee mission = new ServeCoffee();
-        waiter.SetMissionAndCoroutine(StartCoroutine(mission.SetMission(waiter, this)), mission);
+        waiter.SetMissionAndCoroutine(StartCoroutine(mission.SetMission(waiter, this)), mission, "ServeCoffee");
+    }
+
+    public void CallHelpIfNeeded()
+    {
+        if (CoffeeShortage > 0)
+        {
+            List<Waiter> waiters = ShopManager.Instance.WaiterManager.GetFreeWaitersUpToCapacity(CoffeeShortage);
+
+            for (int i = 0; i < waiters.Count; i++)
+            {
+                int order = Mathf.Min(waiters[i].Capacity, CoffeeShortage);
+                waiters[i].SetOrder(order);
+                PromiseForCoffee(order);
+                StartServeMission(waiters[i]);
+
+                if (CoffeeShortage == 0) break;
+            }
+        }
     }
 
     public void CloseWaiterRequest()
@@ -151,7 +267,7 @@ public class Table : FateMonoBehaviour
         waiterReaquested = false;
     }
 
-    public List<Seat> GetFullSeats()
+    public List<Seat> GetSeats()
     {
         List<Seat> fullSeats = new List<Seat>();
 

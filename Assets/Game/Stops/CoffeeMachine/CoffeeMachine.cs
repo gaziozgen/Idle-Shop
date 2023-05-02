@@ -10,6 +10,7 @@ public class CoffeeMachine : FateMonoBehaviour
     [SerializeField] private Transform interactionPoint = null;
     [SerializeField] private Transform coffeeSpawnPoint = null;
     [SerializeField] private float queueSpacing = 2f;
+    [SerializeField] private int maxQueueLength = 5;
     [SerializeField] private float baseProduceDuration = 1.0f;
     [SerializeField] private float produceSpeedIncreaseRatioPerLevel = 1.1f;
     [SerializeField] private GameObject prefab;
@@ -27,10 +28,27 @@ public class CoffeeMachine : FateMonoBehaviour
     private void Awake()
     {
         coffeePool = new FateObjectPool<Coffee>(prefab, true, 10, 20);
-        waiterQueue = new PersonQueue<Waiter>(interactionPoint, queueSpacing, (Waiter waiter) =>
+        waiterQueue = new PersonQueue<Waiter>(interactionPoint, queueSpacing, maxQueueLength, (Waiter waiter) =>
         {
             return StartCoroutine(GetOrder(waiter));
         }, (Coroutine routine) => StopCoroutine(routine));
+    }
+
+    private IEnumerator GetOrder(Waiter waiter)
+    {
+        float duration = baseProduceDuration / Mathf.Pow(produceSpeedIncreaseRatioPerLevel, waiter.Level - 1);
+        produceDuration_ = new(duration);
+        yield return waiter.WaitUntilReached;
+        waiter.TurnTo(interactionPoint.eulerAngles.y);
+
+        loadingBubble.StartLoading(duration);
+        while (!waiter.OrderTaken)
+        {
+            yield return produceDuration_;
+            waiter.AddCoffeeToStack(ProduceCoffee());
+        }
+        loadingBubble.Close();
+
     }
 
     public void RemoveFromQueue(Waiter waiter)
@@ -70,22 +88,5 @@ public class CoffeeMachine : FateMonoBehaviour
     public Coffee ProduceCoffee()
     {
         return coffeePool.Get(coffeeSpawnPoint.position);
-    }
-
-    private IEnumerator GetOrder(Waiter waiter)
-    {
-        float duration = baseProduceDuration / Mathf.Pow(produceSpeedIncreaseRatioPerLevel, waiter.Level - 1);
-        produceDuration_ = new(duration);
-        yield return waiter.WaitUntilReached;
-        waiter.TurnTo(interactionPoint.eulerAngles.y);
-
-        loadingBubble.StartLoading(duration);
-        while (!waiter.OrderTaken)
-        {
-            yield return produceDuration_;
-            waiter.AddCoffeeToStack(ProduceCoffee());
-        }
-        loadingBubble.Close();
-
     }
 }

@@ -35,6 +35,7 @@ public class TableManager : MonoBehaviour
             {
                 secondPlaceUnlocked = true;
                 FreeIdleCameraController.Instance.UpgradeClamp();
+                FreeWaiterArea.Instance.UpgradePositions();
                 secondPlace.SetActive(true);
                 secondPlaceLock.SetActive(false);
             }
@@ -86,6 +87,7 @@ public class TableManager : MonoBehaviour
                 {
                     secondPlaceUnlocked = true;
                     FreeIdleCameraController.Instance.UpgradeClamp();
+                    FreeWaiterArea.Instance.UpgradePositions();
                     secondPlace.SetActive(true);
                     secondPlaceLock.SetActive(false);
                 }

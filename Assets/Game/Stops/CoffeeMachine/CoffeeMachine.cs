@@ -41,9 +41,9 @@ public class CoffeeMachine : FateMonoBehaviour
         yield return waiter.WaitUntilReached;
         waiter.TurnTo(interactionPoint.eulerAngles.y);
 
-        loadingBubble.StartLoading(duration);
         while (!waiter.OrderTaken)
         {
+            loadingBubble.StartLoading(duration);
             yield return produceDuration_;
             waiter.AddCoffeeToStack(ProduceCoffee());
         }

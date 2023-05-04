@@ -32,12 +32,11 @@ public class Table : FateMonoBehaviour
     public int PromisedCoffees { get; private set; } = 0;
     public int GarbageCount { get => garbageStack.Count; }
 
-    private bool empty = true;
     private bool waiterReaquested = false;
 
     private void Awake()
     {
-        waiterQueue = new PersonQueue<Waiter>(WaiterInteractionPoint, queueDistance, maxQueueLength ,(Waiter waiter) =>
+        waiterQueue = new PersonQueue<Waiter>(WaiterInteractionPoint, queueDistance, maxQueueLength, (Waiter waiter) =>
         {
             return StartCoroutine(ServeCoffees(waiter));
         }, (Coroutine routine) => StopCoroutine(routine));
@@ -77,9 +76,14 @@ public class Table : FateMonoBehaviour
         waiterQueue.RemoveImmediate(waiter);
     }
 
-    public bool IsEmpty()
+    public bool HasAtLeastOneEmptySeat()
     {
-        return empty;
+        for (int i = 0; i < UnlockedSeatCount; i++)
+        {
+            if (!seats[i].IsReserved())
+                return true;
+        }
+        return false;
     }
 
     public void Unlock(bool effect)
@@ -127,7 +131,6 @@ public class Table : FateMonoBehaviour
                 if (!seats[i].IsReserved())
                 {
                     seats[i].Reserve();
-                    if (empty) empty = false;
                     return seats[i];
                 }
             }
@@ -204,7 +207,7 @@ public class Table : FateMonoBehaviour
 
     public void RegisterToServingWaiters(Waiter waiter)
     {
-        if (!servingWaiters.Contains(waiter)) 
+        if (!servingWaiters.Contains(waiter))
             servingWaiters.Add(waiter);
     }
 
@@ -294,7 +297,6 @@ public class Table : FateMonoBehaviour
 
     public void CleanTable()
     {
-        empty = true;
         for (int i = 0; i < UnlockedSeatCount; i++)
             seats[i].CleanSeat();
         cleanEffect.Play();

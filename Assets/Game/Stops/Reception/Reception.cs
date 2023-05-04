@@ -3,7 +3,6 @@ using FateGames.Core;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class Reception : FateMonoBehaviour
 {
@@ -51,9 +50,11 @@ public class Reception : FateMonoBehaviour
 
     public IEnumerator Place(Customer customer)
     {
+        //Debug.Log("Place", customer);
         Seat seat = ShopManager.Instance.TableManager.GetEmptySeatIfAny();
         if (seat)
         {
+            //Debug.Log("Seat found", customer);
             animator.SetTrigger("Press");
             bubble.StartLoading(registerDuration);
             yield return _registerDuration;
@@ -63,16 +64,32 @@ public class Reception : FateMonoBehaviour
             StartCoroutine(new GoToSeat().SetMission(customerQueue.Dequeue(), seat));
             if (expectedCustomers < 3) CallCustomer(1, 2);
         }
-        else
+        else if (waitingCustomer == null)
+        {
+            //Debug.Log("Seat not found, customer assigned to waiting customer", customer);
             waitingCustomer = customer;
+        }
+        /*else
+        {
+            Debug.LogError("Seat not found and waiting customer is full", customer);
+            Debug.LogError("Waiting customer is", waitingCustomer);
+        }*/
+
     }
 
     public void PlaceWaitingCustomer()
     {
+        //Debug.Log("Place waiting customer");
         if (waitingCustomer)
         {
-            StartCoroutine(Place(waitingCustomer));
+            //Debug.Log("yes waiting customer");
+            Customer customer = waitingCustomer;
             waitingCustomer = null;
+            StartCoroutine(Place(customer));
+        }
+        else
+        {
+            //Debug.Log("no waiting customer");
         }
     }
 
@@ -92,4 +109,3 @@ public class Reception : FateMonoBehaviour
         });
     }
 }
-

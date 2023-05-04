@@ -29,8 +29,8 @@ public class Door : FateMonoBehaviour
         rightDoor.DOKill();
         leftDoor.DOKill();
 
-        rightDoor.DORotate(Vector3.up * 90, 0.3f);
-        leftDoor.DORotate(Vector3.up * -90, 0.3f);
+        rightDoor.DOLocalRotate(Vector3.up * 90, 0.3f);
+        leftDoor.DOLocalRotate(Vector3.up * -90, 0.3f);
     }
 
     private void Close()
@@ -38,7 +38,7 @@ public class Door : FateMonoBehaviour
         rightDoor.DOKill();
         leftDoor.DOKill();
 
-        rightDoor.DORotate(Vector3.zero, 0.3f);
-        leftDoor.DORotate(Vector3.zero, 0.3f);
+        rightDoor.DOLocalRotate(Vector3.zero, 0.3f);
+        leftDoor.DOLocalRotate(Vector3.zero, 0.3f);
     }
 }

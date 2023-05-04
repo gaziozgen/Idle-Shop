@@ -10,6 +10,7 @@ public class TableManager : MonoBehaviour
     [SerializeField] private GameObject secondPlace = null;
     [SerializeField] private GameObject secondPlaceLock = null;
     [SerializeField] private int secondPlaceUnlockLevel = 0;
+    [SerializeField] private int driveThruUnlockLevel = 12;
     [SerializeField] private SaveDataVariable saveData;
 
     private bool secondPlaceUnlocked = false;
@@ -50,16 +51,16 @@ public class TableManager : MonoBehaviour
             if (seat) return seat;
         }
 
-        List<Table> emptyTables = new List<Table>();
+        List<Table> tablesHasAtLeastOneEmptySeat = new List<Table>();
         for (int i = 0; i < tables.Count; i++)
         {
-            if (tables[i].UnlockedSeatCount != 0 && tables[i].IsEmpty())
-                emptyTables.Add(tables[i]);
+            if (tables[i].UnlockedSeatCount != 0 && tables[i].HasAtLeastOneEmptySeat())
+                tablesHasAtLeastOneEmptySeat.Add(tables[i]);
         }
 
-        if (emptyTables.Count > 0)
+        if (tablesHasAtLeastOneEmptySeat.Count > 0)
         {
-            currentTable = emptyTables[Random.Range(0, emptyTables.Count)];
+            currentTable = tablesHasAtLeastOneEmptySeat[Random.Range(0, tablesHasAtLeastOneEmptySeat.Count)];
             return currentTable.GetSeatToSit();
         }
         else
@@ -68,7 +69,7 @@ public class TableManager : MonoBehaviour
 
     public bool IsUnlockAvaliable()
     {
-        if (tables[tables.Count-1].UnlockedSeatCount == 4) return false;
+        if (tables[tables.Count - 1].UnlockedSeatCount == 4) return false;
         else return true;
     }
 
@@ -79,7 +80,7 @@ public class TableManager : MonoBehaviour
             if (tables[i].UnlockedSeatCount < 4)
             {
                 saveData.Value.SeatCount++;
-                
+
                 tables[i].Unlock(true);
                 FreeIdleCameraController.Instance.Focus(tables[i].transform.position, 0.5f);
 
@@ -90,6 +91,11 @@ public class TableManager : MonoBehaviour
                     FreeWaiterArea.Instance.UpgradePositions();
                     secondPlace.SetActive(true);
                     secondPlaceLock.SetActive(false);
+                }
+                if (saveData.Value.SeatCount >= driveThruUnlockLevel && !saveData.Value.DriveThruUnlocked)
+                {
+                    ShopManager.Instance.DriveThru.Unlock();
+                    FreeIdleCameraController.Instance.Focus(new Vector3(-10, 0, 10), 0.5f);
                 }
                 return;
             }

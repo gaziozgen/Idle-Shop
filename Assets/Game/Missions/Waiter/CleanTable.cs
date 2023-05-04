@@ -30,9 +30,9 @@ public class CleanTable : Mission<Waiter>
         table.CleanTable();
         ShopManager.Instance.Trash.JoinQueue(person);
         yield return person.WaitUntilCoffeeStackFinished;
+        ShopManager.Instance.Trash.Dequeue();
 
         person.SetMissionAndCoroutine(null, null, "null");
-        ShopManager.Instance.Trash.Dequeue();
         ShopManager.Instance.WaiterManager.MissionDone(person);
     }
 

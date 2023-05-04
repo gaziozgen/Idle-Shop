@@ -82,6 +82,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftDoor: {fileID: 6831797690249797637}
   rightDoor: {fileID: 3201652009655023854}
+  mask:
+    serializedVersion: 2
+    m_Bits: 384
 --- !u!65 &6336704287368340000
 BoxCollider:
   m_ObjectHideFlags: 0

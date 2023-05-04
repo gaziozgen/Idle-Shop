@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using DG.Tweening;
-using static UnityEngine.Rendering.DebugUI;
-using TreeEditor;
 
 public class Table : FateMonoBehaviour
 {

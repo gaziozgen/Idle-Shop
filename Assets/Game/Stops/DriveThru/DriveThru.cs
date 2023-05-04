@@ -121,7 +121,7 @@ public class DriveThru : FateMonoBehaviour
             });
         }
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
 
         UIMoney.Instance.Add(coffeeNeed, carTransform.position + Vector3.up * 2.5f, true);
         carIsWaitingCoffee = false;

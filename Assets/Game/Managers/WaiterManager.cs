@@ -18,9 +18,11 @@ public class WaiterManager : FateMonoBehaviour
     private List<Waiter> busyWaiterList = new List<Waiter>();
     private Queue<Action<Waiter>> missions = new Queue<Action<Waiter>>();
 
+    private DriveThru driveThru = null;
 
     private void Awake()
     {
+        driveThru = ShopManager.Instance.DriveThru;
         pool = new FateObjectPool<Waiter>(waiterPrafab, true, 20, 50);
         missions = new Queue<Action<Waiter>>();
         LoadFromData();
@@ -98,13 +100,29 @@ public class WaiterManager : FateMonoBehaviour
 
     private void ManageWaiters()
     {
-        if (freeWaiterList.Count > 0 && missions.Count > 0)
+        if (freeWaiterList.Count > 0 && (missions.Count > 0 || driveThru.CoffeeShortage > 0))
         {
             Waiter waiter = freeWaiterArea.ReleaseOldest();
             freeWaiterList.Remove(waiter);
-            Action<Waiter> mission = missions.Dequeue();
+
+            if (driveThru.CoffeeShortage > 0)
+            {
+                ServeToTakeAway mission = new ServeToTakeAway();
+                waiter.SetMissionAndCoroutine(StartCoroutine(mission.SetMission(waiter, ShopManager.Instance.DriveThru)), mission, "TakeAway");
+            }
+            else
+            {
+                Action<Waiter> mission = missions.Dequeue();
+                mission(waiter);
+            }
             busyWaiterList.Add(waiter);
-            mission(waiter);
+        }
+    }
+
+    public void ManageWaitersForDriveForDriveThru()
+    {
+        while (freeWaiterList.Count > 0 && driveThru.CoffeeShortage > 0) {
+            ManageWaiters();
         }
     }
 

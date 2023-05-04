@@ -113,12 +113,14 @@ public class Customer : Person, IPooledObject
             coffee.transform.localRotation = Quaternion.identity;
             yield return coffeeDrinkDuration;
             coffee.Drink();
+            UIMoney.Instance.Add(1, transform.position, happy);
             coffee.transform.parent = null;
             coffee.transform.localRotation = Quaternion.identity;
             drinkedCoffees++;
             seat.Table.PutGarbage(coffee.transform);
         }
 
+        animator.SetTrigger("Sit");
         drinking = false;
 
         if (CoffeeNeed == 0)
@@ -126,7 +128,6 @@ public class Customer : Person, IPooledObject
             seat.LeaveSeat();
             leaveEffect.Play();
             StartCoroutine(new Exit().SetMission(this));
-            UIMoney.Instance.Add(drinkedCoffees, transform.position, happy);
             moneyEffect.Play();
         }
     }

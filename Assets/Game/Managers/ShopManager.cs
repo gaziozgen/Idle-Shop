@@ -11,6 +11,7 @@ public class ShopManager : FateMonoBehaviour
     public CoffeeMachineManager CoffeeMachineManager = null;
     public Reception Reception = null;
     public Trash Trash = null;
+    public DriveThru DriveThru = null;
     public CustomerManager CustomerManager = null;
     public WaiterManager WaiterManager = null;
     public WaiterSpeedUpgradeController WaiterSpeedUpgradeController = null;
@@ -38,5 +39,4 @@ public class ShopManager : FateMonoBehaviour
             waiter.SetMissionAndCoroutine(StartCoroutine(mission.SetMission(waiter, table)), mission, "CleanTable");
         });
     }
-
 }

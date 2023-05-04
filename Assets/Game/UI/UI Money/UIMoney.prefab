@@ -48,7 +48,7 @@ MonoBehaviour:
   tmpro: {fileID: 405608845099067632}
   background: {fileID: 5161640165046305215}
   effectDuration: 0.2
-  coffeeMoney: 10
+  coffeeMoney: 15
   risingMoneyPrefab: {fileID: 7593697361327481714, guid: cf698fd2c09b6754a8ab9cfa07124831,
     type: 3}
   saveData: {fileID: 11400000, guid: 2fbe29c554af5d84b9bdecaab48fec86, type: 2}

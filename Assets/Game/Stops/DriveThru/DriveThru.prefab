@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carRespawnDelayRange: {x: 5, y: 10}
-  maxCoffeeNeedRatioToSeats: 0.5
+  maxBoxNeedRatioToSeats: 0.5
   saveData: {fileID: 11400000, guid: 2fbe29c554af5d84b9bdecaab48fec86, type: 2}
   mesh: {fileID: 6241487421673550424}
   lockedImage: {fileID: 6800158893194381470}

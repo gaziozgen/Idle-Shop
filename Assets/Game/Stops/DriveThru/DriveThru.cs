@@ -8,7 +8,7 @@ using PathCreation;
 public class DriveThru : FateMonoBehaviour
 {
     [SerializeField] private Vector2 carRespawnDelayRange = Vector2.zero;
-    [SerializeField] private float maxCoffeeNeedRatioToSeats = 1;
+    [SerializeField] private float maxBoxNeedRatioToSeats = 1;
     [SerializeField] private SaveDataVariable saveData = null;
     [SerializeField] private Transform mesh = null;
     [SerializeField] private GameObject lockedImage = null;
@@ -72,7 +72,7 @@ public class DriveThru : FateMonoBehaviour
             }
             lastBox.PutCoffee(waiter.ServeCoffee().GetComponent<Coffee>());
             dropedCoffees++;
-            carBubble.SetText((coffeeNeed - dropedCoffees).ToString(), true);
+            carBubble.SetText((coffeeNeed - dropedCoffees).ToString());
         }
 
         if (dropedCoffees == coffeeNeed)
@@ -177,8 +177,8 @@ public class DriveThru : FateMonoBehaviour
                 cashierAnimator.SetTrigger("Press");
                 carAnimator.SetBool("Move", false);
                 carIsWaitingCoffee = true;
-                coffeeNeed = Random.Range(1, 1 + Mathf.CeilToInt(saveData.Value.SeatCount * maxCoffeeNeedRatioToSeats));
-                carBubble.SetText(coffeeNeed.ToString(), true);
+                coffeeNeed = 4 * Random.Range(1, 1 + Mathf.CeilToInt(saveData.Value.SeatCount * maxBoxNeedRatioToSeats));
+                carBubble.SetText(coffeeNeed.ToString());
                 ShopManager.Instance.WaiterManager.ManageWaitersForDriveForDriveThru();
             }
         }

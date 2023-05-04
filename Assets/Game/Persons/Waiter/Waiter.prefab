@@ -63,7 +63,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 03909a2f5fd15fc468e4a6db334f7a99, type: 2}
   mesh: {fileID: 7503943483009575749}
   stackOperationsSpeedIncreaseRatioPerLevel: 1.2
-  baseCoffeeServeDuration: 0.4
+  baseCoffeeServeDuration: 0.25
   baseTrashCollectDuration: 0.2
   orderTakeDuration: 1
   baseWalkSpeed: 2.5

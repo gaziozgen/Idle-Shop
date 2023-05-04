@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 23650384214390676}
   gameState: {fileID: 11400000, guid: 35af722527cf21148bdd90a70a23f45e, type: 2}
-  speed: 1
+  zoomSpeed: 1
   zoomOutMin: 8
   zoomOutMax: 20
   driftAcceleration: 20

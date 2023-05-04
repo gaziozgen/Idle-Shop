@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using FateGames.Core;
 using DG.Tweening;
-using static UnityEngine.Rendering.DebugUI;
 
 public class Trash : FateMonoBehaviour
 {

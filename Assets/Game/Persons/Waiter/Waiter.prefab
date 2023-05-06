@@ -77,6 +77,7 @@ MonoBehaviour:
   animator: {fileID: 4248154607581849034}
   bubble: {fileID: 7250972307196051030}
   shadow: {fileID: 3661044030034524978}
+  stackSound: {fileID: 11400000, guid: eee3c8f3d7926d54989ade659a2583ec, type: 2}
 --- !u!114 &5813341857992313617
 MonoBehaviour:
   m_ObjectHideFlags: 0

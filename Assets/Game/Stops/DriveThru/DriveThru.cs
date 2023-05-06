@@ -25,6 +25,7 @@ public class DriveThru : FateMonoBehaviour
     [SerializeField] private Animator carAnimator = null;
     [SerializeField] private Animator cashierAnimator = null;
     [SerializeField] private ParticleSystem smokeEffect = null;
+    [SerializeField] private SoundEntity carHorn = null;
 
 
     public int CoffeeShortage { get => coffeeNeed - promisedCoffees; }
@@ -174,6 +175,8 @@ public class DriveThru : FateMonoBehaviour
             Move();
             if (carDistance > 67 && !carIsWaitingCoffee && !orderFinished)
             {
+                GameManager.Instance.PlaySound(carHorn);
+                DOVirtual.DelayedCall(0.2f, () => GameManager.Instance.PlaySound(carHorn));
                 cashierAnimator.SetTrigger("Press");
                 carAnimator.SetBool("Move", false);
                 carIsWaitingCoffee = true;

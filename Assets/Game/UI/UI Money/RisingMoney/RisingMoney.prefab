@@ -282,3 +282,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textMeshProUGUI: {fileID: 444348443811752071}
+  moneySound: {fileID: 11400000, guid: 432c14897c9c104439532596ff342f39, type: 2}

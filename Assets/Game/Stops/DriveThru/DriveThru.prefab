@@ -278,6 +278,7 @@ MonoBehaviour:
   carAnimator: {fileID: 5686990974619565738}
   cashierAnimator: {fileID: 4219822116785375961}
   smokeEffect: {fileID: 4415148489542052740}
+  carHorn: {fileID: 11400000, guid: f2df03d31659b454e88572ae9a249549, type: 2}
 --- !u!114 &5043003444327501226
 MonoBehaviour:
   m_ObjectHideFlags: 0

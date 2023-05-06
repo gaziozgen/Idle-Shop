@@ -10,6 +10,7 @@ public class Door : FateMonoBehaviour
     [SerializeField] private Transform leftDoor = null;
     [SerializeField] private Transform rightDoor = null;
     [SerializeField] private LayerMask mask = 0;
+    [SerializeField] private SoundEntity sound = null;
 
     private bool open = false;
     //private List<Collider> persons = new List<Collider>();
@@ -26,22 +27,12 @@ public class Door : FateMonoBehaviour
             Close();
         }
     }
-    /*
-        private void OnTriggerEnter(Collider person)
-        {
-            persons.Add(person);
-            if (!open) Open();
-        }
 
-        private void OnTriggerExit(Collider person)
-        {
-            persons.Remove(person);
-            if (persons.Count == 0) Close();
-        }*/
 
     private void Open()
     {
         open = true;
+        if (sound != null) GameManager.Instance.PlaySound(sound, transform.position);
         rightDoor.DOKill();
         leftDoor.DOKill();
 

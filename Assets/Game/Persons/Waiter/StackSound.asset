@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54bf1c51925c8ed49af5f18fbd7f5ed3, type: 3}
-  m_Name: VibrationOn
+  m_Script: {fileID: 11500000, guid: d3b7ec7f09cd4654a9fcf5f7678247ad, type: 3}
+  m_Name: StackSound
   m_EditorClassIdentifier: 
-  value: 1
-  OnValueChanged:
-    m_PersistentCalls:
-      m_Calls: []
+  tag: 
+  clip: {fileID: 8300000, guid: 618c43a5be693734ba34fda97ead4a00, type: 3}
+  loop: 0
+  spatialBlend: 0.9
+  pitchRangeMin: 1
+  pitchRangeMax: 1.1
+  volume: 0.625

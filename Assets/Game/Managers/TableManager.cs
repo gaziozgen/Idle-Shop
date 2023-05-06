@@ -17,7 +17,7 @@ public class TableManager : MonoBehaviour
 
     private Table currentTable = null;
 
-    private void Awake()
+    private void Start()
     {
         FastOpen(saveData.Value.SeatCount);
     }
@@ -37,6 +37,7 @@ public class TableManager : MonoBehaviour
                 secondPlaceUnlocked = true;
                 FreeIdleCameraController.Instance.UpgradeClamp();
                 FreeWaiterArea.Instance.UpgradePositions();
+                UpgradeButtonsController.Instance.OpenNextMapButton();
                 secondPlace.SetActive(true);
                 secondPlaceLock.SetActive(false);
             }
@@ -89,6 +90,7 @@ public class TableManager : MonoBehaviour
                     secondPlaceUnlocked = true;
                     FreeIdleCameraController.Instance.UpgradeClamp();
                     FreeWaiterArea.Instance.UpgradePositions();
+                    UpgradeButtonsController.Instance.OpenNextMapButton();
                     secondPlace.SetActive(true);
                     secondPlaceLock.SetActive(false);
                 }

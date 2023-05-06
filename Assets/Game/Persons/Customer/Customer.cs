@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.AI;
+using FateGames.Core;
 
 public class Customer : Person, IPooledObject
 {

@@ -10,6 +10,7 @@ using UnityEngine;
 public class RisingMoney : FateMonoBehaviour, IPooledObject
 {
     [SerializeField] private TextMeshProUGUI textMeshProUGUI;
+    [SerializeField] private SoundEntity moneySound = null;
 
     public void SetMoney(int money)
     {
@@ -20,6 +21,7 @@ public class RisingMoney : FateMonoBehaviour, IPooledObject
 
     public void OnObjectSpawn()
     {
+        GameManager.Instance.PlaySound(moneySound, transform.position);
         transform.DOMoveY(6, 1f).SetEase(Ease.OutSine).OnComplete(() =>
         {
             Release();

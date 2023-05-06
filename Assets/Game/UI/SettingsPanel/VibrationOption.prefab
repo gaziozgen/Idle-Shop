@@ -12,6 +12,17 @@ PrefabInstance:
       propertyPath: m_text
       value: Vibration
       objectReference: {fileID: 0}
+    - target: {fileID: 6092412442831595672, guid: 7dd37e673880fde4c970901098c8d161,
+        type: 3}
+      propertyPath: variable.Variable
+      value: 
+      objectReference: {fileID: 11400000, guid: 7d63e4f11e0e45541ba946f741801d72,
+        type: 2}
+    - target: {fileID: 6092412442831595672, guid: 7dd37e673880fde4c970901098c8d161,
+        type: 3}
+      propertyPath: variable.UseConstant
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6092412442831595674, guid: 7dd37e673880fde4c970901098c8d161,
         type: 3}
       propertyPath: m_Name

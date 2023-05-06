@@ -62,7 +62,7 @@ public class Reception : FateMonoBehaviour
 
             expectedCustomers--;
             StartCoroutine(new GoToSeat().SetMission(customerQueue.Dequeue(), seat));
-            if (expectedCustomers < 3) CallCustomer(1, 2);
+            if (expectedCustomers < 3) CallCustomer(0.5f, 1.5f);
         }
         else if (waitingCustomer == null)
         {
@@ -95,7 +95,7 @@ public class Reception : FateMonoBehaviour
 
     private IEnumerator DefaultCustomerCall()
     {
-        if (expectedCustomers < 5) CallCustomer(2, 6);
+        if (expectedCustomers < 5) CallCustomer(0, 2);
         yield return _defaultCustomerCallInterval;
         yield return DefaultCustomerCall();
     }

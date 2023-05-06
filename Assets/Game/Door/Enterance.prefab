@@ -85,6 +85,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 384
+  sound: {fileID: 11400000, guid: 4045bc0e331c9f644ae55636b53fd0b3, type: 2}
 --- !u!65 &6336704287368340000
 BoxCollider:
   m_ObjectHideFlags: 0

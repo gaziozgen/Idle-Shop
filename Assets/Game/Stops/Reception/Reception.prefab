@@ -87,7 +87,7 @@ MonoBehaviour:
   startPosition: {fileID: 9043585393309784795}
   distance: 2
   maxQueueLength: -1
-  defaultCustomerCallInterval: 2
+  defaultCustomerCallInterval: 4
   bubble: {fileID: 9176825850850252141}
   registerDuration: 1
   animator: {fileID: 3356810122355872593}

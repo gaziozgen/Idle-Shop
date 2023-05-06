@@ -25,6 +25,7 @@ public class Waiter : Person, IPooledObject
     [SerializeField] private Animator animator;
     [SerializeField] private PersonalBubble bubble;
     [SerializeField] private GameObject shadow;
+    [SerializeField] private SoundEntity stackSound = null;
 
     public Coroutine MissionCoroutine { get; private set; } = null;
     public Mission<Waiter> Mission { get; private set; } = null;
@@ -137,24 +138,28 @@ public class Waiter : Person, IPooledObject
     public void AddCoffeeToStack(Coffee coffee)
     {
         if (coffeeStack.Count == 0) animator.SetBool("Carrying", true);
+        PlayStackSound();
         coffeeStack.Push(coffee.transform);
     }
 
     public void AddTrashToStack(Transform coffeeTrash)
     {
         if (coffeeStack.Count == 0) animator.SetBool("Carrying", true);
+        PlayStackSound();
         coffeeStack.Push(coffeeTrash.transform);
     }
 
     public Transform ServeCoffee()
     {
         if (coffeeStack.Count == 1) animator.SetBool("Carrying", false);
+        PlayStackSound();
         return coffeeStack.Pop();
     }
 
     public Transform ThrowCoffee()
     {
         if (coffeeStack.Count == 1) animator.SetBool("Carrying", false);
+        PlayStackSound();
         return coffeeStack.Pop();
     }
 
@@ -174,6 +179,10 @@ public class Waiter : Person, IPooledObject
         animator.speed = agent.speed / 1.75f;
     }
 
+    private void PlayStackSound()
+    {
+        if (stackSound != null) GameManager.Instance.PlaySound(stackSound, transform.position);
+    }
 
     public Action Release { get; set; }
     public void OnObjectSpawn()

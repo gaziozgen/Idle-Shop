@@ -15,11 +15,17 @@ public class ShopManager : FateMonoBehaviour
     public CustomerManager CustomerManager = null;
     public WaiterManager WaiterManager = null;
     public WaiterSpeedUpgradeController WaiterSpeedUpgradeController = null;
+    [SerializeField] private SoundEntity ambientSound = null;
 
     static public ShopManager Instance { get; private set; }
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void Start()
+    {
+        if (ambientSound != null) GameManager.Instance.PlaySound(ambientSound);
     }
 
     public void RequestWaiterToServe(Table table)

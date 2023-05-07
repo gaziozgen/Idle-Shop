@@ -63,10 +63,10 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 03909a2f5fd15fc468e4a6db334f7a99, type: 2}
   mesh: {fileID: 7503943483009575749}
   stackOperationsSpeedIncreaseRatioPerLevel: 1.2
-  baseCoffeeServeDuration: 0.5
+  baseCoffeeServeDuration: 0.25
   baseTrashCollectDuration: 0.2
   orderTakeDuration: 1
-  baseWalkSpeed: 3.5
+  baseWalkSpeed: 2.5
   stackStartPoint: {fileID: 2111977636188772304}
   stackDistance: 1
   coffeeStack: {fileID: 5813341857992313617}
@@ -77,6 +77,7 @@ MonoBehaviour:
   animator: {fileID: 4248154607581849034}
   bubble: {fileID: 7250972307196051030}
   shadow: {fileID: 3661044030034524978}
+  stackSound: {fileID: 11400000, guid: eee3c8f3d7926d54989ade659a2583ec, type: 2}
 --- !u!114 &5813341857992313617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,7 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stackParentAndStart: {fileID: 2111977636188772304}
   distance: {x: 0, y: 0.4, z: 0}
-  speed: 70
+  speed: 30
   additionalLatencyEffectOnMove: 0
   additionalLatencyAmount: -0.1
 --- !u!114 &-8454994961979344476

@@ -3,12 +3,12 @@ using FateGames.Core;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class Reception : FateMonoBehaviour
 {
     [SerializeField] private Transform startPosition = null;
     [SerializeField] private float distance = 2;
+    [SerializeField] private int maxQueueLength = 5;
     [SerializeField] private float defaultCustomerCallInterval = 5;
     [SerializeField] private PersonalBubble bubble;
     [SerializeField] private float registerDuration = 1;
@@ -25,7 +25,7 @@ public class Reception : FateMonoBehaviour
     {
         _registerDuration = new WaitForSeconds(registerDuration);
         _defaultCustomerCallInterval = new(defaultCustomerCallInterval);
-        customerQueue = new PersonQueue<Customer>(startPosition, distance, (Customer customer) =>
+        customerQueue = new PersonQueue<Customer>(startPosition, distance, maxQueueLength, (Customer customer) =>
         {
             return StartCoroutine(Register(customer));
         }, (Coroutine routine) => StopCoroutine(routine));
@@ -50,9 +50,11 @@ public class Reception : FateMonoBehaviour
 
     public IEnumerator Place(Customer customer)
     {
+        //Debug.Log("Place", customer);
         Seat seat = ShopManager.Instance.TableManager.GetEmptySeatIfAny();
         if (seat)
         {
+            //Debug.Log("Seat found", customer);
             animator.SetTrigger("Press");
             bubble.StartLoading(registerDuration);
             yield return _registerDuration;
@@ -60,24 +62,40 @@ public class Reception : FateMonoBehaviour
 
             expectedCustomers--;
             StartCoroutine(new GoToSeat().SetMission(customerQueue.Dequeue(), seat));
-            if (expectedCustomers < 3) CallCustomer(1, 2);
+            if (expectedCustomers < 3) CallCustomer(0.5f, 1.5f);
         }
-        else
+        else if (waitingCustomer == null)
+        {
+            //Debug.Log("Seat not found, customer assigned to waiting customer", customer);
             waitingCustomer = customer;
+        }
+        /*else
+        {
+            Debug.LogError("Seat not found and waiting customer is full", customer);
+            Debug.LogError("Waiting customer is", waitingCustomer);
+        }*/
+
     }
 
     public void PlaceWaitingCustomer()
     {
+        //Debug.Log("Place waiting customer");
         if (waitingCustomer)
         {
-            StartCoroutine(Place(waitingCustomer));
+            //Debug.Log("yes waiting customer");
+            Customer customer = waitingCustomer;
             waitingCustomer = null;
+            StartCoroutine(Place(customer));
+        }
+        else
+        {
+            //Debug.Log("no waiting customer");
         }
     }
 
     private IEnumerator DefaultCustomerCall()
     {
-        if (expectedCustomers < 5) CallCustomer(2, 6);
+        if (expectedCustomers < 5) CallCustomer(0, 2);
         yield return _defaultCustomerCallInterval;
         yield return DefaultCustomerCall();
     }
@@ -91,4 +109,3 @@ public class Reception : FateMonoBehaviour
         });
     }
 }
-

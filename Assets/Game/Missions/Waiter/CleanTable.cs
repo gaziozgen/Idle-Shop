@@ -19,8 +19,8 @@ public class CleanTable : Mission<Waiter>
     {
         person.SetDestination(table.WaiterInteractionPoint.position);
         yield return person.WaitUntilReached;
-        person.TurnTo(table.WaiterInteractionPoint.eulerAngles.y);
 
+        person.TurnTo(table.WaiterInteractionPoint.eulerAngles.y);
         while (table.GarbageCount > 0)
         {
             yield return person.TrashCollectDuration;
@@ -30,20 +30,29 @@ public class CleanTable : Mission<Waiter>
         table.CleanTable();
         ShopManager.Instance.Trash.JoinQueue(person);
         yield return person.WaitUntilCoffeeStackFinished;
-
-        person.SetMissionAndCoroutine(null, null);
         ShopManager.Instance.Trash.Dequeue();
+
+        person.SetMissionAndCoroutine(null, null, "null");
         ShopManager.Instance.WaiterManager.MissionDone(person);
     }
 
     public override void HandleStopMission()
     {
+        //person.MissionList.Add("HandleStopMission Start");
         if (table.GarbageCount > 0)
+        {
+            //person.MissionList.Add("msaayý temizlemeye gidiyor veya çöpleri topoluyorken yok oldu");
             ShopManager.Instance.RequestWaiterToClean(table);
+        }
         else
+        {
+            //person.MissionList.Add("çöpleri kutuya taþýrken yok oldu");
             ShopManager.Instance.Trash.RemoveFromQueue(person);
 
+        }
+
         person.CleanCoffeeStack();
-        person.SetMissionAndCoroutine(null, null);
+        person.SetMissionAndCoroutine(null, null, "null");
+        //person.MissionList.Add("HandleStopMission End");
     }
 }

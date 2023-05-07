@@ -86,9 +86,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionPoint: {fileID: 1823275318624415884}
   coffeeSpawnPoint: {fileID: 1511713775533975685}
-  queueSpacing: 1.5
-  baseProduceDuration: 1
-  produceSpeedIncreaseRatioPerLevel: 1.2
+  queueSpacing: 1
+  maxQueueLength: 5
+  baseProduceDuration: 0.6
+  produceSpeedIncreaseRatioPerLevel: 1.3
   prefab: {fileID: 2224435385276164339, guid: c395319b88af6e64c9e24fb64a39b658, type: 3}
   mesh: {fileID: 5361508994391293227}
   lockedMesh: {fileID: 2239788565375012752}

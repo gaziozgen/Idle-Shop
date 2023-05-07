@@ -9,10 +9,12 @@ public class TipBox : MonoBehaviour
 {
     public static TipBox Instance;
 
+    [SerializeField] private int treshold = 50;
     [SerializeField] private Canvas buttonCanvas = null;
     [SerializeField] private Canvas panelCanvas = null;
     [SerializeField] private Transform tipBoxParent = null;
     [SerializeField] protected TextMeshProUGUI tipAmountText = null;
+    [SerializeField] private GameObject claimButton = null;
 
     private int currentAmount = 0;
 
@@ -24,8 +26,8 @@ public class TipBox : MonoBehaviour
     }
 
     public void AddTip(int amount)
-    {
-        if (currentAmount == 0) tipBoxParent.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
+    {   
+        if (currentAmount < treshold && currentAmount + amount > treshold) tipBoxParent.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
         currentAmount += amount;
     }
 
@@ -40,6 +42,11 @@ public class TipBox : MonoBehaviour
         tipAmountText.text = currentAmount.ToString();
 
         tipBoxParent.localScale = Vector3.zero;
+
+        DOVirtual.DelayedCall(1f, () =>
+        {
+            claimButton.SetActive(true);
+        });
     }
 
     public void Get()
@@ -60,6 +67,7 @@ public class TipBox : MonoBehaviour
 
     private void ClosePanel()
     {
+        claimButton.SetActive(false);
         GameManager.Instance.PlayHaptic();
         panelCanvas.enabled = false;
         buttonCanvas.enabled = true;

@@ -154,6 +154,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 9040759894804425454}
+  option1Canvas: {fileID: 5786019372347548454}
+  option2Canvas: {fileID: 721572245953086799}
 --- !u!114 &335056812325050215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,8 +284,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Settings
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f32883249e1e1ee4592ddf2df15c3523, type: 2}
+  m_sharedMaterial: {fileID: -7565999747999451767, guid: f32883249e1e1ee4592ddf2df15c3523,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -648,8 +651,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6748192397614489318, guid: 16d4cbc7c5852644992f891fa02c7cce,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7565999747999451767, guid: f32883249e1e1ee4592ddf2df15c3523,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16d4cbc7c5852644992f891fa02c7cce, type: 3}
+--- !u!223 &721572245953086799 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 5379468106283584324, guid: 16d4cbc7c5852644992f891fa02c7cce,
+    type: 3}
+  m_PrefabInstance: {fileID: 4657917870033014283}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2090332839856326538 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6748192396975753601, guid: 16d4cbc7c5852644992f891fa02c7cce,
@@ -940,11 +955,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1753224323439261036, guid: f23bc18a45a8290469a5f2acd64d35c1,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7565999747999451767, guid: f32883249e1e1ee4592ddf2df15c3523,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f23bc18a45a8290469a5f2acd64d35c1, type: 3}
 --- !u!224 &5137975438062461411 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1753224322939167243, guid: f23bc18a45a8290469a5f2acd64d35c1,
+    type: 3}
+  m_PrefabInstance: {fileID: 6852637276329477096}
+  m_PrefabAsset: {fileID: 0}
+--- !u!223 &5786019372347548454 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 1104900048354140366, guid: f23bc18a45a8290469a5f2acd64d35c1,
     type: 3}
   m_PrefabInstance: {fileID: 6852637276329477096}
   m_PrefabAsset: {fileID: 0}

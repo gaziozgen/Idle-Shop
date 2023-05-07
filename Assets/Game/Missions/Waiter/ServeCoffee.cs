@@ -17,15 +17,7 @@ public class ServeCoffee : Mission<Waiter>
 
     public override IEnumerator DoMission()
     {
-        if (table.HasUnorderedCustomer())
-        {
-            person.OpenProcessAnimation();
-            yield return person.OrderTakeDuration;
-            person.CloseProcessAnimation();
-            table.GetOrderOfCurrentCustomers();
-        }
-
-        person.SetOrder(Mathf.Min(table.TotalCoffeeNeed(), person.Capacity));
+        table.RegisterToServingWaiters(person);
 
         machine = ShopManager.Instance.CoffeeMachineManager.GetCoffeeMachineWithShortestQueue();
         if (machine == null)
@@ -36,51 +28,39 @@ public class ServeCoffee : Mission<Waiter>
 
         machine.JoinQueue(person);
         yield return person.WaitUntilOrderTaken;
-
         machine.Dequeue();
+
         person.SetOrder(0);
-        person.SetDestination(table.WaiterInteractionPoint.position);
-        yield return person.WaitUntilReached;
-        person.TurnTo(table.WaiterInteractionPoint.eulerAngles.y);
 
-        List<Seat> fullSeats = table.GetFullSeats();
-        for (int i = 0; 0 < person.CoffeeStackLength; i++)
-        {
-            Seat seat = fullSeats[i % fullSeats.Count];
-            if (seat.Customer && seat.Customer.CoffeeNeed > 0)
-            {
-                seat.PutCoffee(person.ServeCoffee());
-                yield return person.CoffeeServeDuration;
-            }
-            else
-                fullSeats.Remove(seat);
-        }
+        table.JoinQueue(person);
+        yield return person.WaitUntilCoffeeStackFinished;
+        table.Dequeue();
 
-        person.SetMissionAndCoroutine(null, null);
-        int totalNeed = table.TotalCoffeeNeed();
-        if (totalNeed > 0)
-            table.StartServeMission(person);
-        else
-        {
-            table.CloseWaiterRequest();
-            ShopManager.Instance.WaiterManager.MissionDone(person);
-        }
+
+        person.SetMissionAndCoroutine(null, null, "null");
+        table.StartOrderMission(person);
     }
 
     public override void HandleStopMission()
     {
-        if (person.Order == 0 && person.CoffeeStackLength == 0) // daha sipariþi almamýþ
-            person.CloseProcessAnimation();
-        else if (person.Order > 0) // sipariþ üretimini tamamlayamamýþ
+        //person.MissionList.Add("HandleStopMission Start");
+        if (person.Order > 0) // sipariþi üretmeye gidiyor veya alýyor
+        {
+            //person.MissionList.Add("sipariþi üretmeye gidiyor veya alýyorken yok oldu");
+            table.CancelCoffeePromise(person.Order);
             machine.RemoveFromQueue(person);
+            
+        }
+        else if (person.Order == 0 && person.CoffeeStackLength > 0) // yolda veya kahve daðýtýyor
+        {
+            //person.MissionList.Add("yolda veya kahve daðýtýyorken yok oldu");
+            table.CancelCoffeePromise(person.CoffeeStackLength);
+            table.RemoveFromQueue(person);
+        }
 
-        if (table.TotalCoffeeNeed() > 0)
-            ShopManager.Instance.RequestWaiterToServe(table);
-        else
-            table.CloseWaiterRequest();
-
-
+        table.RemoveWaiterFromServers(person);
         person.CleanCoffeeStack();
-        person.SetMissionAndCoroutine(null, null);
+        person.SetMissionAndCoroutine(null, null, "null");
+        //person.MissionList.Add("HandleStopMission End");
     }
 }

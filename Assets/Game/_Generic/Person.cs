@@ -23,6 +23,8 @@ public abstract class Person : FateMonoBehaviour
 
     public virtual void SetDestination(Vector3 target)
     {
+        if (agent.enabled == false)
+            Debug.LogError("agent not active!", this);
         agent.SetDestination(target);
     }
 

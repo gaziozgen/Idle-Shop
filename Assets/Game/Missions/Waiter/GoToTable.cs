@@ -20,10 +20,12 @@ public class GoToTable : Mission<Waiter>
 
         person.TurnTo(table.WaiterInteractionPoint.eulerAngles.y);
 
-        person.SetMissionAndCoroutine(null, null);
-        int totalNeed = table.TotalCoffeeNeed();
-        if (totalNeed > 0) 
-            table.StartServeMission(person);
+        person.SetMissionAndCoroutine(null, null, "null");
+        int shortage = table.CoffeeShortage;
+        if (shortage > 0)
+        {
+            table.StartOrderMission(person);
+        }
         else
         {
             table.CloseWaiterRequest();
@@ -33,7 +35,10 @@ public class GoToTable : Mission<Waiter>
 
     public override void HandleStopMission()
     {
+        //person.MissionList.Add("HandleStopMission Start");
+        //person.MissionList.Add("masaya giderkne yok oldu");
         ShopManager.Instance.RequestWaiterToServe(table);
-        person.SetMissionAndCoroutine(null, null);
+        person.SetMissionAndCoroutine(null, null, "null");
+        //person.MissionList.Add("HandleStopMission End");
     }
 }

@@ -6,23 +6,27 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 using DG.Tweening;
+using TMPro;
+using System;
 
 public class TapToSpeedUp : FateMonoBehaviour
 {
     public static TapToSpeedUp Instance;
 
     [SerializeField] private Canvas canvas;
+    [SerializeField] private TextMeshProUGUI multiplierText;
+    [SerializeField] private GameObject multiplierArea;
+    [SerializeField] private GameObject InfoText;
     [SerializeField] private Animator animator;
-    //[SerializeField] private FloatReference targetVariable;
-    //[SerializeField] GameEvent onTappedToSpeedUp;
-    [SerializeField] private float impactDuration = 1.5f;
+    [SerializeField] private float impactDuration = 2f;
+    [SerializeField] private float changeSpeed = 2f;
     [SerializeField] private float waitingDuration = 4;
-    [SerializeField] private float multiplier = 2;
+    [SerializeField] private float[] multipliers = new float[3];
     [SerializeField] private GameStateVariable gameState = null;
 
-    private bool isGameStarted = false;
 
-    private Tween speedUpTween = null, countdownTween = null;
+    private float[] tapExpiryTimes = { -1, -1, -1 };
+    private float infoTextShowTime = -1;
 
     private void Awake()
     {
@@ -32,53 +36,29 @@ public class TapToSpeedUp : FateMonoBehaviour
     private void Update()
     {
         if (Input.GetMouseButtonDown(0)) { TapCheck(); }
-    }
 
-    private void TapCheck() { if (isGameStarted && gameState.Value != GameState.PAUSED && (!EventSystem.current.IsPointerOverGameObject() || EventSystem.current.currentSelectedGameObject == null)) Tap(); }
+        if (gameState.Value != GameState.PAUSED)
+        {
+            int tapCount = TapCount();
+            Time.timeScale = Mathf.MoveTowards(Time.timeScale, multipliers[tapCount], Time.deltaTime * changeSpeed);
+            if (Time.timeScale <= 1 && tapCount == 0)
+            {
+                if (multiplierArea.activeSelf) multiplierArea.SetActive(false);
+            }
+            else
+            {
+                if (!multiplierArea.activeSelf) multiplierArea.SetActive(true);
+                multiplierText.text = "x" + Time.timeScale.ToString("F1");
+            }
 
-    public void OnGameStarted()
-    {
-        Debug.Log("OnGameStarted", this);
-        isGameStarted = true;
-        StartCountdown();
-    }
-    public void OnGameEnded()
-    {
-        isGameStarted = false;
-        CancelCountdown();
-        canvas.enabled = false;
-    }
 
-    public void Tap()
-    {
-        GameManager.Instance.PlayHaptic();
-        //onTappedToSpeedUp.Raise();
-        canvas.enabled = false;
-        SpeedUp();
-        StartCountdown();
-    }
-    public void SpeedUp()
-    {
-        CancelSpeedUp();
-        Time.timeScale = multiplier;
-        speedUpTween = DOTween.To(() => Time.timeScale, (float x) => { if (gameState.Value != GameState.PAUSED) Time.timeScale = x; }, 1, impactDuration).OnComplete(() => speedUpTween = null);
-    }
-    public void CancelSpeedUp()
-    {
-        if (speedUpTween == null) return;
-        speedUpTween.Kill(true);
-        speedUpTween = null;
-    }
-    public void StartCountdown()
-    {
-        CancelCountdown();
-        countdownTween = DOVirtual.DelayedCall(waitingDuration, Show).OnComplete(() => countdownTween = null);
-    }
-    public void CancelCountdown()
-    {
-        if (countdownTween == null) return;
-        countdownTween.Kill(true);
-        countdownTween = null;
+
+            if (Time.timeScale == 1 && Time.time > infoTextShowTime && !InfoText.activeSelf)
+            {
+                InfoText.SetActive(true);
+                Animate();
+            }
+        }
     }
 
     public void Hide()
@@ -89,9 +69,43 @@ public class TapToSpeedUp : FateMonoBehaviour
     public void Show()
     {
         canvas.enabled = true;
-        Animate();
     }
-    public void Animate()
+
+    private void TapCheck() { if (gameState.Value != GameState.PAUSED && (!EventSystem.current.IsPointerOverGameObject() || EventSystem.current.currentSelectedGameObject == null)) Tap(); }
+
+
+    public void Tap()
+    {
+        GameManager.Instance.PlayHaptic();
+
+        float oldestExpiryTime = float.MaxValue;
+        int oldestExpiryTimeIndex = -1;
+
+        for (int i = 0; i < tapExpiryTimes.Length; i++)
+        {
+            if (tapExpiryTimes[i] < oldestExpiryTime)
+            {
+                oldestExpiryTime = tapExpiryTimes[i];
+                oldestExpiryTimeIndex = i;
+            }
+        }
+        tapExpiryTimes[oldestExpiryTimeIndex] = Time.time + impactDuration;
+
+        if (InfoText.activeSelf) InfoText.SetActive(false);
+        infoTextShowTime = Time.time + waitingDuration;
+    }
+
+    private int TapCount()
+    {
+        int total = 0;
+        for (int i = 0; i < tapExpiryTimes.Length; i++)
+        {
+            if (tapExpiryTimes[i] > Time.time) total++;
+        }
+        return total;
+    }
+
+    private void Animate()
     {
         animator.SetTrigger("Bounce");
     }

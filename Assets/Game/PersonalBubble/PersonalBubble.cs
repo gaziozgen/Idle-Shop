@@ -14,6 +14,8 @@ public class PersonalBubble : FateMonoBehaviour
     [SerializeField] private TextMeshProUGUI tmproText = null;
     [SerializeField] private GameObject loadingBubble = null;
     [SerializeField] private Image loadingBar = null;
+    [SerializeField] private GameObject coffeeImage = null;
+    [SerializeField] private GameObject takeAwayImage = null;
 
     private bool loading = false;
     private float loadingDuration = 1;
@@ -47,8 +49,11 @@ public class PersonalBubble : FateMonoBehaviour
         loadingDuration = duration;
     }
 
-    public void SetText(string text)
+    public void SetText(string text, bool takeAway = false)
     {
+        if (!takeAway) coffeeImage.SetActive(true);
+        else takeAwayImage.SetActive(true);
+
         if (textBubbleTransform.localScale == Vector3.zero) textBubbleTransform.DOScale(1, 0.2f);
 
         if (!canvas.enabled) canvas.enabled = true;
@@ -66,6 +71,8 @@ public class PersonalBubble : FateMonoBehaviour
 
     public void Close()
     {
+        coffeeImage.SetActive(false);
+        takeAwayImage.SetActive(false);
         loading = false;
         textShowing = false;
         textBubbleTransform.localScale = Vector3.zero;

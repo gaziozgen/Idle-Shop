@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.AI;
+using FateGames.Core;
 
 public class Customer : Person, IPooledObject
 {
@@ -20,8 +21,8 @@ public class Customer : Person, IPooledObject
     public int CoffeeNeed { get; private set; } = 0;
     public bool Ordered { get; private set; } = false;
 
-    private bool drinking = false;
     private Seat seat = null;
+    private bool drinking = false;
     private bool happy = true;
 
     private WaitForSeconds coffeeDrinkDuration;
@@ -81,6 +82,7 @@ public class Customer : Person, IPooledObject
     public void TakeCoffee()
     {
         CoffeeNeed--;
+        seat.Table.InformTableThatCoffeeGetted();
         UpdateOrder();
 
         if (!drinking)
@@ -112,12 +114,14 @@ public class Customer : Person, IPooledObject
             coffee.transform.localRotation = Quaternion.identity;
             yield return coffeeDrinkDuration;
             coffee.Drink();
+            UIMoney.Instance.Add(1, transform.position, happy);
             coffee.transform.parent = null;
             coffee.transform.localRotation = Quaternion.identity;
             drinkedCoffees++;
             seat.Table.PutGarbage(coffee.transform);
         }
 
+        animator.SetTrigger("Sit");
         drinking = false;
 
         if (CoffeeNeed == 0)
@@ -125,7 +129,6 @@ public class Customer : Person, IPooledObject
             seat.LeaveSeat();
             leaveEffect.Play();
             StartCoroutine(new Exit().SetMission(this));
-            UIMoney.Instance.Add(drinkedCoffees, transform.position, happy);
             moneyEffect.Play();
         }
     }

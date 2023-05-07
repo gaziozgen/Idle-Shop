@@ -44,8 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c792db7aa49f286448bb375810b988aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tables: []
-  coffeeMachines: []
-  reception: {fileID: 0}
-  customerManager: {fileID: 0}
-  waiterManager: {fileID: 0}
+  TableManager: {fileID: 0}
+  CoffeeMachineManager: {fileID: 0}
+  Reception: {fileID: 0}
+  Trash: {fileID: 0}
+  DriveThru: {fileID: 0}
+  CustomerManager: {fileID: 0}
+  WaiterManager: {fileID: 0}
+  WaiterSpeedUpgradeController: {fileID: 0}
+  ambientSound: {fileID: 11400000, guid: e1730d72ec5c2bb41b925fa8c9f55fe1, type: 2}

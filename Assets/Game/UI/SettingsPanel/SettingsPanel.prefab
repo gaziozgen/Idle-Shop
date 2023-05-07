@@ -284,8 +284,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Settings
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f32883249e1e1ee4592ddf2df15c3523, type: 2}
+  m_sharedMaterial: {fileID: -7565999747999451767, guid: f32883249e1e1ee4592ddf2df15c3523,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -650,6 +651,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6748192397614489318, guid: 16d4cbc7c5852644992f891fa02c7cce,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7565999747999451767, guid: f32883249e1e1ee4592ddf2df15c3523,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16d4cbc7c5852644992f891fa02c7cce, type: 3}
 --- !u!223 &721572245953086799 stripped
@@ -948,6 +955,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1753224323439261036, guid: f23bc18a45a8290469a5f2acd64d35c1,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7565999747999451767, guid: f32883249e1e1ee4592ddf2df15c3523,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f23bc18a45a8290469a5f2acd64d35c1, type: 3}
 --- !u!224 &5137975438062461411 stripped

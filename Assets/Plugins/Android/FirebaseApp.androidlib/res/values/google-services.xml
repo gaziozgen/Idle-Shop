@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
+  <string name="gcm_defaultSenderId" translatable="false">907315403165</string>
+  <string name="google_storage_bucket" translatable="false">idle-coffee-shop-3d.appspot.com</string>
+  <string name="project_id" translatable="false">idle-coffee-shop-3d</string>
+  <string name="google_api_key" translatable="false">AIzaSyDLoj5TUpGfCN2-o5FZisjCAosXVFaTANE</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDLoj5TUpGfCN2-o5FZisjCAosXVFaTANE</string>
+  <string name="google_app_id" translatable="false">1:907315403165:android:e08f2ce10abcc425403774</string>
+  <string name="default_web_client_id" translatable="false">907315403165-aujpju59t2uplqr2mrsrsdqtoq0qdkf1.apps.googleusercontent.com</string>
+</resources>

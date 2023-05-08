@@ -57,8 +57,12 @@ public class TipBox : MonoBehaviour
 
     public void Double()
     {
-        UIMoney.Instance.AddFromTip(currentAmount * 2);
-        ClosePanel();
+        SDKManager.Instance.ShowRewardedAd(Get, () =>
+        {
+            UIMoney.Instance.AddFromTip(currentAmount * 2);
+            ClosePanel();
+        });
+        
     }
 
     private void ClosePanel()

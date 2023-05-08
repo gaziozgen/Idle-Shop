@@ -79,7 +79,7 @@ namespace FateGames.Core
         }
 #if UNITY_EDITOR
         [MenuItem("Fate/Delete Player Data")]
-        static void DeletePlayerData()
+        public static void DeletePlayerData()
         {
             string path = Application.persistentDataPath + "/saveData.fate";
             if (File.Exists(path))

@@ -1,10 +1,12 @@
 using DG.Tweening;
 using FateGames.Core;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Windows;
 
 public class UIMoney : FateMonoBehaviour
 {
@@ -33,7 +35,7 @@ public class UIMoney : FateMonoBehaviour
 
     public void Add(int coffeeCount, Vector3 wordPosition, bool tip)
     {
-        if (tip) TipBox.Instance.AddTip((int)(coffeeCount * coffeeMoney * Random.Range(0.2f, 0.6f)));
+        if (tip) TipBox.Instance.AddTip((int)(coffeeCount * coffeeMoney * UnityEngine.Random.Range(0.2f, 0.6f)));
         saveData.Value.Money += coffeeMoney * coffeeCount;
         UpdateText();
         RisingMoneyEffect(wordPosition, coffeeMoney * coffeeCount);
@@ -62,6 +64,21 @@ public class UIMoney : FateMonoBehaviour
         background.DOKill();
         background.DOScale(1.2f, effectDuration / 2).SetLoops(2, LoopType.Yoyo);
         onMoneyChanged.Invoke();
+    }
+
+    public void SetMoneyFromDevMode(string money)
+    {
+        try
+        {
+            int result = int.Parse(money.Substring(0, money.Length-1));
+            saveData.Value.Money = result;
+            UpdateText();
+            print("money updated");
+        }
+        catch (FormatException)
+        {
+            print($"Unable to parse");
+        }
     }
 
 }

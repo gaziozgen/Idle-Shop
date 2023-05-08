@@ -20,6 +20,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
             return instance;
         }
     }
+    protected bool duplicate = false;
     protected virtual void Awake()
     {
         RemoveDuplicates();
@@ -44,6 +45,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
         }
         else
         {
+            duplicate = true;
             Destroy(gameObject);
         }
     }

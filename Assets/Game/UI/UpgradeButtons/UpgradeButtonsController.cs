@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class UpgradeButtonsController : FateMonoBehaviour
@@ -43,6 +44,7 @@ public class UpgradeButtonsController : FateMonoBehaviour
 
 
     [SerializeField] private SoundEntity clickSound = null;
+    [SerializeField] private UnityEvent onButtonClicked;
 
 
     private WaiterManager waiterManager = null;
@@ -77,14 +79,17 @@ public class UpgradeButtonsController : FateMonoBehaviour
     private int watchedAddCount = 0;
     public void WatchAddForWaiter()
     {
-        watchedAddCount++;
-        BuyWaiter(false);
-
-        /*if (watchedAddCount % 3 == 0)
+        SDKManager.Instance.ShowRewardedAd(() => { }, () =>
         {
-            BuyWaiter();
-            BuyWaiter();
-        }*/
+            watchedAddCount++;
+            BuyWaiter(false);
+
+            /*if (watchedAddCount % 3 == 0)
+            {
+                BuyWaiter();
+                BuyWaiter();
+            }*/
+        });
     }
 
     public void UpdateAllButtons()
@@ -98,8 +103,7 @@ public class UpgradeButtonsController : FateMonoBehaviour
 
     public void BuyWaiter(bool spendMoney)
     {
-        GameManager.Instance.PlaySound(clickSound);
-        GameManager.Instance.PlayHaptic();
+        OnButtonClicked();
         if (spendMoney) UIMoney.Instance.Spend(buyWaiterBaseCost + saveData.Value.soldierBuyLevel * buyWaiterCostIncreaseAmount);
         waiterManager.AddWaiter(1, Vector3.zero);
         UpdateAllButtons();
@@ -107,8 +111,7 @@ public class UpgradeButtonsController : FateMonoBehaviour
 
     public void BuySeat()
     {
-        GameManager.Instance.PlaySound(clickSound);
-        GameManager.Instance.PlayHaptic();
+        OnButtonClicked();
         UIMoney.Instance.Spend(buyTableBaseCost + saveData.Value.SeatCount * buyTableCostIncreaseAmount);
         tableManager.UnlockNextTable();
         UpdateAllButtons();
@@ -116,8 +119,7 @@ public class UpgradeButtonsController : FateMonoBehaviour
 
     public void BuyCoffeeMachine()
     {
-        GameManager.Instance.PlaySound(clickSound);
-        GameManager.Instance.PlayHaptic();
+        OnButtonClicked();
         UIMoney.Instance.Spend(buyMachineBaseCost + saveData.Value.CoffeeMachineCount * buyMachineCostIncreaseAmount);
         coffeeMachineManager.UnlockNextMachine();
         UpdateAllButtons();
@@ -125,8 +127,7 @@ public class UpgradeButtonsController : FateMonoBehaviour
 
     public void SpeedUp()
     {
-        GameManager.Instance.PlaySound(clickSound);
-        GameManager.Instance.PlayHaptic();
+        OnButtonClicked();
         UIMoney.Instance.Spend(speedUpBaseCost + saveData.Value.SpeedLevel * speedUpCostIncreaseAmount);
         waiterSpeedController.LevelUp();
         UpdateAllButtons();
@@ -134,11 +135,17 @@ public class UpgradeButtonsController : FateMonoBehaviour
 
     public void Merge()
     {
-        GameManager.Instance.PlaySound(clickSound);
-        GameManager.Instance.PlayHaptic();
+        OnButtonClicked();
         UIMoney.Instance.Spend(mergeBaseCost + saveData.Value.soldierMergeLevel * mergeCostIncreaseAmount);
         StartCoroutine(waiterManager.Merge());
         UpdateAllButtons();
+    }
+
+    private void OnButtonClicked()
+    {
+        GameManager.Instance.PlaySound(clickSound);
+        GameManager.Instance.PlayHaptic();
+        onButtonClicked.Invoke();
     }
 
     public void UpdateMergeButton()

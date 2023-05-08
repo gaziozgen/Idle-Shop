@@ -101,22 +101,11 @@ namespace FateGames.Core
         {
             levelManager.StartLevel();
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Level_Progress", saveData.Value.Level);
-            if (interstitialRoutine != null)
-            {
-                StopCoroutine(interstitialRoutine);
-                interstitialRoutine = null;
-            }
-            interstitialRoutine = InterstitialRoutine();
-            StartCoroutine(interstitialRoutine);
-        }
-        private IEnumerator interstitialRoutine = null;
 
-        private IEnumerator InterstitialRoutine()
-        {
-            yield return new WaitForSeconds(5);
-            SDKManager.Instance.ShowInterstitial();
-            yield return InterstitialRoutine();
         }
+
+
+
 
         public void FinishLevel(bool success)
         {

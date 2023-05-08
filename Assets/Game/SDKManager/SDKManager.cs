@@ -29,7 +29,7 @@ public class SDKManager : MonoBehaviour
     private float lastInterstitialShowTime = float.MinValue;
     float timeIntervalBetweenInterstitial => Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.GetValue("time_interval_between_interstitial").LongValue;
     float firstInterstitialTime => Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.GetValue("first_interstitial_time").LongValue;
-    public bool canShowInterstitial => Time.time >= lastInterstitialShowTime + timeIntervalBetweenInterstitial && Time.time >= firstInterstitialTime;
+    public bool canShowInterstitial => Time.unscaledTime >= lastInterstitialShowTime + timeIntervalBetweenInterstitial && Time.unscaledTime >= firstInterstitialTime;
     [SerializeField] private UnityEvent onInitialized;
     private bool facebookInitialized = false;
     private bool interstitialInitialized = false;
@@ -358,7 +358,7 @@ public class SDKManager : MonoBehaviour
     private void OnInterstitialDismissedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
     {
 
-        lastInterstitialShowTime = Time.time;
+        lastInterstitialShowTime = Time.unscaledTime;
         // Interstitial ad is hidden. Pre-load the next ad
         Debug.Log("Interstitial dismissed");
         LoadInterstitial();
@@ -457,7 +457,7 @@ public class SDKManager : MonoBehaviour
     {
         // Rewarded ad is hidden. Pre-load the next ad
         Debug.Log("Rewarded ad dismissed");
-        lastInterstitialShowTime = Time.time;
+        lastInterstitialShowTime = Time.unscaledTime;
         if (!rewardedAdSucceed && onRewardedAdFailed != null)
             onRewardedAdFailed.Invoke();
         else if (rewardedAdSucceed && onRewardedAdSucceed != null)
